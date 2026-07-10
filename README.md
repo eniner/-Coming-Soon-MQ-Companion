@@ -119,8 +119,8 @@ Screenshots below are from a live dev session. Functionality varies by tab — m
 
 **What it does (so far):**
 
-- Merges **live bridge inventory** + **EZInventory JSON export** + **UltDev catalog** (120k+ items)
-- Native **item icons** cropped from EQ client atlas (no 120k PNG dump)
+- Merges **live bridge inventory** + **EZInventory JSON export** + **UltDev catalog** 
+- Native **item icons** cropped from EQ client atlas
 - Full stat lines: AC, HP, mana, attributes, resists, heroic, etc.
 - Slot labels (worn, bags), quantity, magic flag
 - Filter/search and refresh
