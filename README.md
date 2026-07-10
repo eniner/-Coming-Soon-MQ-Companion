@@ -1,7 +1,7 @@
 # MQ Overlay Companion — Coming Soon
 
-> **⚠️ Work in progress — not remotely done.**  
-> This repository is a **preview only**. Screenshots and feature descriptions reflect current development on a private build. **No source code, binaries, or install packages are published here.**
+> **🚧 Work in progress — not a public release.**  
+> This repository is a **preview only**. Screenshots and feature descriptions reflect the current private build. **No source code, binaries, or install packages are published here.**
 
 ---
 
@@ -9,13 +9,14 @@
 
 **MQ Overlay Companion** is a desktop + browser overlay for [MacroQuest](https://www.macroquest.org/) that gives you one modern dashboard to monitor and control your EverQuest boxes — without digging through a dozen in-game windows and `.ini` files.
 
-It is built for **multi-boxers** and **solo power users** who want:
+Built for **multi-boxers** and **solo power users** who want:
 
 - Live character vitals, target, group, and zone info in one place
 - Remote control of macros, plugins, Lua scripts, and MQ commands
 - Inventory and loot management with real item icons and stats
-- Spawn lists, navigation helpers, and config editing from the overlay
-- A clean UI that can sit beside EQ (or over it in Ghost mode)
+- Spawn radar with a zone minimap, navigation helpers, and config editing
+- Multi-box roles, broadcast presets, and peer loot routing
+- A clean UI that sits beside EQ (or over it in Ghost / Compact mode)
 
 ---
 
@@ -28,18 +29,16 @@ flowchart LR
   C --> D[EverQuest / MacroQuest]
 ```
 
-1. **Web dashboard** — runs locally in your browser (`http://127.0.0.1:…`)
-2. **Overlay Companion** — small Windows app; hosts the UI, icon atlas, and APIs
+1. **Web dashboard** — local browser UI (`http://127.0.0.1:38111/`)
+2. **Overlay Companion** — Windows app; hosts the UI, SQLite store, icon atlas, and APIs
 3. **MQ2OverlayBridge** — in-game MQ plugin that streams live data and runs commands
 4. **Optional data sources** — EZInventory exports, UltDev item catalog, `Loot.ini`, etc.
 
-The companion auto-detects connected EQ clients (no hardcoded character names). Switch boxes from the top bar; every tab follows the selected character.
+The companion auto-detects connected EQ clients. Switch boxes from the top bar; every tab follows the selected character.
 
 ---
 
 ## UI overview
-
-The sidebar is grouped into three areas:
 
 | Group | Tabs |
 |-------|------|
@@ -47,287 +46,259 @@ The sidebar is grouped into three areas:
 | **Automation** | Boxes, Hotbuttons, Plugins, Macros, Lua |
 | **Config** | INI, Settings |
 
-**Global features** (visible across tabs):
+**Global chrome (all tabs):**
 
 - Character mini-card with HP ring, zone, and level
-- Per-box character switcher
-- Bridge connection status
-- **Ctrl+K** command palette (jump to any tab/action)
-- Event feed (loot actions, tells, alerts)
+- Per-box character switcher with health dots (`connected` / `degraded` / `no_bridge`)
+- Bridge connection status + API version awareness
+- **Ctrl+K** command palette (jump to tabs, macros, plugins, or run `/commands`)
+- Event feed (loot, tells, alerts, audit)
 - **Compact** mode (vitals-only bar) and **Ghost** mode (transparent overlay)
 
 ---
 
-## Feature preview (in sidebar order)
+## Feature gallery
 
-Screenshots below are from a live dev session. Functionality varies by tab — many areas are stubbed, partial, or still being wired up.
+Screenshots from a live session (July 2026).
 
 ---
 
-### 1. Status — character command center
+### 1. Status — command center
 
 ![Status tab](docs/screenshots/01-status.png)
 
-**What it does (so far):**
-
-- Live vitals: HP, mana, endurance, XP bars
-- Character, level, zone, and XYZ position
-- Target and group panels (populate when in-game state exists)
-- **All Boxes** overview — quick vitals for every connected client
-- Buffs / songs list and casting / gem status
-- Optional in-game HUD toggle (transparent vitals on the EQ window)
-- Alert profiles: low HP, tells, spawn watch, sound
-- Send arbitrary MQ commands (`/echo`, `/cast`, etc.)
-
-**WIP / gaps:** Some panels show placeholders when not grouped or not targeting. Alert delivery and HUD polish are ongoing.
+- Live vitals: HP, mana, endurance, XP
+- Character, level, zone, XYZ position
+- Target + group panels (Assist / Follow / Invite helpers)
+- **All Boxes** overview cards
+- Buffs / songs and casting / gem status
+- In-game HUD toggle
+- **Per-character alert profiles**: low HP, tells, spawn watch, sound
+- Server-side alert events (dashboard toasts even when you were on another tab)
+- Send arbitrary MQ commands
 
 ---
 
-### 2. Console — game log + command line
+### 2. Console — live log + history
 
 ![Console tab](docs/screenshots/02-console.png)
 
-**What it does (so far):**
-
-- Streams in-game console output over the bridge pipe
+- Streams in-game / MQ / macro / Lua output over the bridge
 - Filter chips: All, Game, Macros, Lua
-- Bottom command input — send `/commands` to the active box
-- Clear log buffer
-
-**WIP / gaps:** Log filtering rules and history search are basic. No log export yet.
+- Command input with history (↑ / ↓)
+- **SQLite history search** across past lines
+- **Export** console log to `.txt`
+- Color-coded lines (tells, errors, loot, macros)
 
 ---
 
-### 3. Spawns — nearby NPC / PC radar
+### 3. Spawns — radar + zone minimap
 
 ![Spawns tab](docs/screenshots/03-spawns.png)
 
-**What it does (so far):**
-
-- Live spawn list with name, type, level, and distance
-- Search / filter (`/` focus shortcut)
-- Type filter dropdown
-- **Watchlist** — pin mob names for alerts (ties into Status alerts)
-
-**WIP / gaps:** No map dots yet. Watchlist → alert wiring is early.
+- Live spawn list: name, type, level, distance / bearing
+- Search + type filters (NPC / PC / Pet / Merc / Corpse)
+- **Zone minimap** — you at center, colored dots for nearby spawns (`dx` / `dy`)
+- Click a map dot or list row to **target**
+- **Watchlist** — pin mob names; alerts fire in background
+- Background spawn polling while other tabs are active
 
 ---
 
-### 4. Inventory — icons, stats, and bag tracking
+### 4. Inventory — icons, stats, sync badges
 
 ![Inventory tab](docs/screenshots/04-inventory.png)
 
-**What it does (so far):**
-
-- Merges **live bridge inventory** + **EZInventory JSON export** + **UltDev catalog** 
-- Native **item icons** cropped from EQ client atlas
-- Full stat lines: AC, HP, mana, attributes, resists, heroic, etc.
-- Slot labels (worn, bags), quantity, magic flag
-- Filter/search and refresh
-- Hints when EZInventory export is missing (`/lua run ezinventory`)
-
-**WIP / gaps:** Bank/bag drill-down grouping still improving. Some items rely on catalog fallback until bridge reload.
+- Merges **live bridge inventory** + **EZInventory JSON** + **UltDev catalog**
+- Native **item icons** from the EQ client atlas
+- Stat lines: AC, HP, mana, attributes, resists, heroic, etc.
+- Filter chips: All / Worn / Bags / **Bank** / Has stats
+- Sync model badges (`EZ` / `CAT`) and **stale export** warnings
+- Search by name, slot, or stat
 
 ---
 
-### 5. Loot — AdvLoot, corpse loot, filters, and peers
+### 5. Loot — AdvLoot, corpse, filters, peers
 
-Loot is split across several sub-views and in-game tie-ins.
-
-#### 5a. Active Loot (dashboard)
+#### Active loot
 
 ![Active loot](docs/screenshots/05-loot-active.png)
 
-**What it does (so far):**
+- Personal + shared AdvLoot with need / greed / leave
+- Corpse loot mirror + **Loot All**
+- Item icons (bridge + catalog name fallback)
+- `Loot.ini` rule badges + quick Keep / Ignore
+- Shared loot peer dropdown, Give → peer, Set all shared → peer
 
-- **Personal** and **shared** AdvLoot lists with need / greed / leave actions
-- **Corpse loot** window mirror with per-slot loot and **Loot All**
-- Item icons (bridge + catalog by name fallback)
-- `Loot.ini` rule badges (Keep / Ignore / etc.) on each row
-- Quick **Keep** / **Ignore** buttons write back to `Loot.ini`
-- Shared loot: peer dropdown, **Give → peer**, **Set all shared → peer**
-
-#### 5b. In-game corpse window (reference)
-
-![In-game corpse loot](docs/screenshots/05-loot-ingame-corpse.png)
-
-The dashboard corpse section mirrors this native loot window (e.g. gnoll reaver corpse → Rain Water icons).
-
-#### 5c. In-game loot chat + event log
-
-![In-game loot chat](docs/screenshots/05-loot-ingame-chat.png)
-
-![Event log](docs/screenshots/05-loot-event-log.png)
-
-Loot actions from the dashboard show up in-game and in the companion **Events** feed (`lootall → corpse`, etc.).
-
-#### 5d. Loot.ini Filters
+#### Loot.ini filters
 
 ![Loot.ini filters](docs/screenshots/05-loot-ini-filters.png)
 
-**What it does (so far):**
+- Read / write real `Loot.ini` (with `.bak` backup before save)
+- Add / update / remove rules (Keep, Ignore, Destroy, Sell, Quest)
+- Filter chips + search
+- **Export / import** filter templates as JSON
 
-- Reads / writes your real `Loot.ini` path
-- Add or update entries (Keep, Ignore, Destroy, Sell, Quest)
-- Filter chips and search across entries
-- Reload from disk
-
-**WIP / gaps:** Bulk import/export and rule templates not built yet.
-
-#### 5e. Peer Assignments (multi-box shared loot)
+#### Peer assignments
 
 ![Peer assignments](docs/screenshots/05-loot-peer-assignments.png)
 
-**What it does (so far):**
-
-- Default peer for shared AdvLoot (`/advloot shared set`)
-- Per-item peer routes persisted to `loot-peers.json`
-- Peer list = connected boxes on your LAN session
-
-**WIP / gaps:** Per-item UI is empty until routes are assigned from shared loot rows.
+- Default peer for shared AdvLoot
+- Per-item peer routes (`loot-peers.json`)
+- **Smart suggestions** from box roles + pattern policies
+- Peers = connected boxes on your session
 
 ---
 
-### 6. Nav — binds, camps, and MQ2Nav hooks
+### 6. Nav — binds, camps, MQ2Nav
 
 ![Nav tab](docs/screenshots/06-nav.png)
 
-**What it does (so far):**
-
-- Zone, bind point, gate status, live position
-- Bind history with **Gate**, **Succor**, **Set Bind** per row
-- Camp name save / load (when MQ2Nav available)
-- MQ2Nav controls: Nav Target, Pause, Stop (disabled until plugin loaded)
-
-**WIP / gaps:** MQ2Nav integration is placeholder until plugin is loaded in-game.
+- Zone, bind, gate status, live position
+- Bind rows with indexed **Gate** / **Succor**
+- Camp save / load / delete
+- MQ2Nav status badges (Idle / Navigating / Paused)
+- Nav Target, Pause, Stop
+- **Nav to Loc** (X / Y → `/nav loc`)
 
 ---
 
-### 7. Boxes — multi-box overview + broadcast
+### 7. Boxes — multi-box crew panel
 
 ![Boxes tab](docs/screenshots/07-boxes.png)
 
-**What it does (so far):**
-
-- Card per connected EQ client: vitals, zone, target summary
-- Per-box actions: Follow, Invite, Pause
-- **Broadcast to all boxes** — preset buttons (Camp All, EQBC/DanNet follow+invite, Pause Macros)
-- Custom `/command` broadcast field
-
-**WIP / gaps:** Only shows clients with bridge loaded. Richer role labels and drag-sort not done.
+- Card per connected client: vitals, zone, target, bridge health
+- **Roles** per toon (main, puller, looter, healer, …) saved to `boxes.json`
+- Crew summary + sort order
+- Per-box Follow / Invite / Pause
+- Broadcast presets (Camp All, EQBC / DanNet follow+invite, Pause Macros)
+- Custom broadcast + **save new presets**
+- **Except main** queue — send to all boxes except the main role
 
 ---
 
-### 8. Hotbuttons — one-click MQ commands
+### 8. Hotbuttons — one-click commands
 
 ![Hotbuttons tab](docs/screenshots/08-hotbuttons.png)
 
-**What it does (so far):**
-
-- Configurable command buttons (Follow, Invite, Pause MQ, Target PC, Sit, Stand, …)
+- Configurable command buttons (multi-step with delays supported)
 - Click = run on selected character
-- Edit mode for customizing labels and commands
-
-**WIP / gaps:** Layout editor and per-character button sets are early.
+- Edit mode: add / delete / **click-to-edit**
+- **Categories** with filter chips
+- **Per-character hotbutton sets** (Global or named toon)
 
 ---
 
-### 9. Plugins — load / unload MQ plugins
+### 9. Plugins — load / unload + INI deep-link
 
 ![Plugins tab](docs/screenshots/09-plugins.png)
 
-**What it does (so far):**
-
-- Lists loaded vs available plugins (100+)
-- Toggle switches to load/unload
-- Shows macro dependencies (“used by N macro(s)”)
-- Search filter
-
-**WIP / gaps:** No plugin config deep-links yet. Unload safety checks minimal.
+- Loaded vs available plugins with search
+- Toggle load / unload (warns when macros depend on a plugin)
+- Macro dependency hints (“used by N macro(s)”)
+- **INI** button opens the matching config file in the INI editor
 
 ---
 
-### 10. Macros — browse, pin, and run `.mac` files
+### 10. Macros — browse, pin, run, edit
 
 ![Macros tab](docs/screenshots/10-macros.png)
 
-**What it does (so far):**
-
-- Full macro library with search
-- **Run** button per macro
+- Full `.mac` library with search
+- Run / Stop / Pause
 - Pin favorites + recent macros
-- Missing dependency hints (e.g. needs MQ2EQBC, MQ2MoveUtils)
-
-**WIP / gaps:** No inline macro editor. Running macro status panel is basic.
+- Missing plugin dependency hints
+- **Inline macro editor** — open, edit, save (with backup / conflict check)
 
 ---
 
-### 11. Lua — script library toggles
+### 11. Lua — scripts + editor
 
 ![Lua tab](docs/screenshots/11-lua.png)
 
-**What it does (so far):**
-
-- Lists Lua scripts from your MQ `lua` folder (200+)
-- Per-script on/off toggles
-- **Stop All** emergency kill
-- Folder grouping (ROOT, EQUI, …)
-- Search filter
-
-**WIP / gaps:** No inline Lua editor. Runtime error surfacing is minimal.
+- Lists scripts from your MQ `lua` folder
+- Per-script run / stop toggles + **Stop All**
+- Folder grouping + search
+- **Inline Lua editor** — open, edit, save
 
 ---
 
-### 12. INI — config file browser + editor
+### 12. INI — config browser + editor
 
 ![INI editor](docs/screenshots/12-ini-editor.png)
 
-**What it does (so far):**
-
-- Browses MQ `Config` folder with grouped categories (KissAssist, MacroQuest, MuleAssist, Other)
-- Click a file → edit in textarea (Loot.ini, MQ2Nav.ini, etc.)
-- Refresh file list
-
-**WIP / gaps:** No syntax highlighting or save-conflict detection yet. Settings tab not screenshotted here.
+- Browses MQ `Config` with grouped categories
+- Syntax-highlighted editor with line gutter
+- Save with **mtime conflict detection** (409 if file changed on disk)
+- Automatic `.bak` before overwrite
+- Unsaved-change indicator
 
 ---
 
-## What is **not** done (honest list)
+### 13. Settings — appearance, LAN, setup wizard
 
-This is **far from release**. Major areas still in flux:
+![Settings tab](docs/screenshots/13-settings.png)
 
-- [ ] Installer / updater / signed binaries
-- [ ] Public documentation and setup wizard
-- [ ] Full Settings tab (LAN access, tokens, themes) — built but not finished
-- [ ] Complete MQ2Nav, DanNet, and EQBC feature parity
-- [ ] Loot peer automation at scale (round-robin, class rules)
-- [ ] Spawn map overlay
-- [ ] Macro/Lua IDE integrations
-- [ ] Mobile / remote access hardening
-- [ ] Test coverage and CI
-- [ ] Performance pass on 6+ box setups
+- Theme / accent / font scale / overlay opacity
+- OBS / screen-capture exclude
+- **LAN access**: enable, token copy / regenerate, read-only mode, IP allowlist  
+  (readonly / allowlist apply live; bind change still needs companion restart)
+- Install MQ **autoload** macro
+- **Setup Wizard** checklist: bridge connected, DLL present, autoload, LAN, mark done
 
-**Expect bugs, missing features, and breaking changes.** This preview exists to show direction, not a finished product.
+---
+
+## Cross-cutting systems
+
+| System | What it does |
+|--------|----------------|
+| **Bridge API v2** | Version handshake; spawn coords, loot icons, richer state |
+| **Per-box health** | `connected` / `degraded` / `no_bridge` with reconnect backoff |
+| **SQLite store** | Chat history search/export, audit events, spawn snapshots |
+| **Audit log** | Loot / INI / broadcast / plugin / macro actions → `companion-audit.jsonl` + Events feed |
+| **Inventory sync model** | Bridge = presence; EZInventory = stats when fresh; catalog = icons/names |
+| **Loot safety** | `Loot.ini` backups, peer routing, filter templates |
+| **Alert engine** | Server-evaluated HP / tell / spawn watch → `/api/alerts/events` |
+| **Deploy scripts** | `deploy-overlay.ps1`, `restart-companion.ps1`, `install-overlay.ps1` |
+
+---
+
+## Still coming / not public yet
+
+Honest remaining work before any public beta:
+
+- [ ] Signed installer / updater
+- [ ] Full CI publishing pipeline
+- [ ] Mobile / hardened remote access beyond LAN token
+- [ ] Deeper MQ2Nav path preview / mesh UI
+- [ ] Round-robin loot policies at raid scale
+- [ ] Performance polish for very large (12+) box crews
+- [ ] Public docs beyond this preview
+
+**Expect bugs and breaking changes.** This preview shows direction, not a finished product.
 
 ---
 
 ## Privacy & repo scope
 
 - **This repo:** screenshots + descriptions only  
-- **Not included:** source code, MQ plugin binaries, EQ client assets, or personal config paths  
+- **Not included:** source code, MQ plugin binaries, EQ client assets, or personal configs  
 - Built against private MacroQuest / OpenVanilla fork work — **not open-sourced here**
 
 ---
 
 ## Status
 
-| Item | State |
+| Area | State |
 |------|--------|
-| Core bridge pipe | ✅ Working in dev |
-| Web dashboard UI | 🟡 Redesign in progress |
-| Inventory + icons | 🟡 Working with caveats |
-| Loot system | 🟡 Active loot + Loot.ini + peers (WIP) |
-| Multi-box broadcast | 🟡 Basic |
+| Core bridge pipe + API v2 | ✅ Working in dev |
+| Web dashboard UI | ✅ Feature-complete for preview |
+| Inventory + icons + sync badges | ✅ Working |
+| Loot (active / Loot.ini / peers / policies) | ✅ Working |
+| Spawns + zone minimap | ✅ Working (needs bridge reload for coords) |
+| Multi-box roles + broadcast | ✅ Working |
+| Macro / Lua editors | ✅ Working |
+| Setup wizard + LAN | ✅ Working |
 | Public release | ❌ Not started |
 
 ---
