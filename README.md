@@ -9,13 +9,24 @@
 
 | | |
 |--|--|
-| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.1 |
-| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.1-win32.zip` |
-| **Updater manifest** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.1/updates.json |
+| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.2 |
+| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.2-win32.zip` |
+| **Updater manifest** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.2/updates.json |
 
 **Install:** expand the zip → run `scripts\install-overlay.ps1` → in EQ `/plugin MQ2OverlayBridge2` → open `http://127.0.0.1:38111/`.
 
+Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is embedded for tray/desktop.
+
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL.
+
+### What’s new in 0.7.0-beta.2
+- Accent-driven primary buttons; labeled compact vitals; endurance color distinct from HP
+- Spawns map legend + facing wedge; side-by-side map/list layout
+- Focus mode: Exit Focus button, Esc / Ctrl+Shift+F always works
+- Main content scrolls on Windows (Status/Settings no longer clipped)
+- Larger default window (1280×900); branded desktop/tray icon
+- Stale EZInventory badge copies `/lua run ezinventory`; plugin/Lua bulk actions; Ctrl+1–9 box hotkeys
+
 
 ---
 
@@ -310,7 +321,8 @@ Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, upd
 **Recently shipped (checkbox history):**
 
 - [x] Production code-signing certificate in CI secrets (local sign path + pipeline exist)
-- [x] Public beta / installers published to this repo (`v0.7.0-beta.1`)
+- [x] Public beta / installers published to this repo (`v0.7.0-beta.2`)
+- [x] UI polish pass (accent, focus exit, scroll, branded icon)
 - [x] Fresh screenshots (July 11 tab-order gallery above)
 - [x] FactionTable / FactionManager standing without visible `/consider`
 - [x] Native Detour poly dump from MQ2Nav `.navmesh`

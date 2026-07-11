@@ -31,5 +31,5 @@ gh secret set OV_SIGN_PFX_PASSWORD -R eniner/-Coming-Soon-MQ-Companion
 Dashboard Settings → Updates → manifest URL:
 
 ```
-https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.1/updates.json
+https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.2/updates.json
 ```

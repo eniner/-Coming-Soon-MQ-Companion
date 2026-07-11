@@ -12,7 +12,7 @@ Updater manifest URL (Settings → Updates):
 https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/latest/download/updates.json
 ```
 
-(For a specific beta tag, use `/download/v0.7.0-beta.1/updates.json`.)
+(For a specific beta tag, use `/download/v0.7.0-beta.2/updates.json`.)
 
 ## CI secrets (code signing)
 
