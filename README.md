@@ -7,16 +7,20 @@
 
 ## What is it?
 
-**MQ Overlay Companion** is a desktop + browser overlay for [MacroQuest](https://www.macroquest.org/) that gives you one modern dashboard to monitor and control your EverQuest boxes — without digging through a dozen in-game windows and `.ini` files.
+**MQ Overlay Companion** is a desktop + browser overlay for [MacroQuest](https://www.macroquest.org/) that gives you one modern dashboard to **monitor, control, and automate** your EverQuest boxes — without digging through a dozen in-game windows and `.ini` files.
 
 Built for **multi-boxers** and **solo power users** who want:
 
-- Live character vitals, target, group, buffs, and zone info in one place
-- Remote control of macros, plugins, Lua scripts, and MQ commands
-- Inventory and loot management with real item icons, stats, and peer routing
-- Spawn radar with a pan/zoom zone minimap, watchlists, and con/faction labels
-- Multi-box roles, broadcast presets, hotbutton sets, and config portability
-- A clean UI that sits beside EQ (or over it in Ghost / Compact / Focus mode)
+- Live character vitals, target, group, buffs, casting/gems, and zone info in one place
+- Remote control of macros, plugins, Lua scripts, hotbuttons, and MQ commands
+- **Composable automation rules** (conditions → toast / sound / suggest / broadcast / command) with cooldowns
+- Inventory and loot with real item icons, stats, copper value, peer routing, **raid loot council / rotation**, and upgrade intel
+- Spawn radar with a pan/zoom zone minimap, watchlists, con/faction labels, and **nav path preview** (bridge v4)
+- Multi-box roles, broadcast presets, crew health / reconnect, and **12+ box performance modes**
+- Config portability (bundle export/import), session summary (XP/hr, deaths, loot copper), and SQLite history
+- A clean UI beside EQ — **Focus / Compact / Ghost** — plus optional **LAN + mobile viewer** (`/mobile.html`)
+
+It is **not** a public release product yet. This repo only documents the private build’s direction.
 
 ---
 
@@ -24,17 +28,17 @@ Built for **multi-boxers** and **solo power users** who want:
 
 ```mermaid
 flowchart LR
-  A[Web Dashboard] --> B[Overlay Companion App]
+  A[Web Dashboard / Mobile] --> B[Overlay Companion App]
   B --> C[MQ2OverlayBridge Plugin]
   C --> D[EverQuest / MacroQuest]
 ```
 
-1. **Web dashboard** — local browser UI (`http://127.0.0.1:38111/`)
-2. **Overlay Companion** — Windows app; hosts the UI, SQLite store, icon atlas, and APIs
+1. **Web dashboard** — local browser UI (`http://127.0.0.1:38111/`); optional **mobile** view at `/mobile.html`
+2. **Overlay Companion** — Windows app; hosts the UI, SQLite store (chat/audit/loot history/usage), icon atlas, rules engine, and HTTP APIs
 3. **MQ2OverlayBridge** — in-game MQ plugin that streams live data and runs commands (**API v4**)
-4. **Optional data sources** — EZInventory exports, UltDev item catalog, `Loot.ini`, etc.
+4. **Optional data sources** — EZInventory exports, UltDev item catalog, `Loot.ini`, MQ2Nav TLOs, etc.
 
-The companion auto-detects connected EQ clients. Switch boxes from the top bar; every tab follows the selected character.
+The companion auto-detects connected EQ clients. Switch boxes from the top bar; every tab follows the selected character. When LAN is enabled, a persistent banner shows remote access is on; short-lived **viewer/control session tokens** can be issued for phones or other devices.
 
 ---
 
@@ -42,9 +46,9 @@ The companion auto-detects connected EQ clients. Switch boxes from the top bar; 
 
 | Group | Tabs |
 |-------|------|
-| **Character** | Status, Console, Spawns, Inventory, Loot, Nav |
-| **Automation** | Boxes, Hotbuttons, Plugins, Macros, Lua |
-| **Config** | INI, Settings |
+| **Character** | Status (vitals + **automation rules**), Console, Spawns, Inventory, Loot (**council**), Nav |
+| **Automation** | Boxes (crew perf / density), Hotbuttons, Plugins (**deps**), Macros, Lua |
+| **Config** | INI, Settings (session, remote, tips, perf) |
 
 **Global chrome (all tabs):**
 
@@ -53,7 +57,7 @@ The companion auto-detects connected EQ clients. Switch boxes from the top bar; 
 - Bridge connection status + **API version awareness** (expects bridge **v4**)
 - **Ctrl+K** command palette — tabs, macros, plugins, hotbuttons, watchlist, recent console lines, `/commands`
 - Notification center (bell) with history, **mute by category**, and **snooze**
-- **Focus** mode, collapsible / icon **Sidebar**, **Compact** vitals bar, **Ghost** overlay (per-element opacity)
+- **Focus** mode, collapsible / pin / icon **Sidebar**, **Compact** vitals bar, **Ghost** overlay (per-element opacity)
 - Persistent **Remote access ON** banner when LAN is enabled (+ `/mobile.html` viewer)
 
 ---
@@ -90,15 +94,15 @@ Shipped tonight on top of the earlier July upgrade pass:
 | **Boxes** | One-click reconnect + backoff countdown on degraded boxes |
 | **Portability** | One-click **config bundle** export / import |
 | **Session** | On-demand **session summary** — XP/hr, deaths, loot copper, disconnects |
-| **Bridge API v3** | Loot `value`, spawn `con` / `faction`, `session_event` metrics (superseded by v4 for nav fields) |
+| **Bridge API v3** | Loot `value`, spawn `con` / `faction`, `session_event` metrics (nav fields added in v4) |
 
-Everything below from earlier releases is still available.
+Everything in the feature gallery below includes both Round 1 and Round 2 capabilities.
 
 ---
 
 ## Feature gallery
 
-Screenshots from a live session (July 10, 2026).
+Screenshots from a live session (July 10, 2026). Gallery images are from earlier in the day; descriptions below include **tonight’s Round 2** features as well.
 
 ---
 
@@ -116,7 +120,7 @@ Screenshots from a live session (July 10, 2026).
 - Server-side alert events (toasts even when you were on another tab)
 - Send arbitrary MQ commands
 - Status rail shows **role** + active alert count from any tab
-- **Automation rules** builder — condition chains → toast / sound / suggest / broadcast / command + cooldown
+- **Automation rules** builder — AND conditions (HP below, zone is, not casting, …) → toast / sound / suggest action button / broadcast preset / command, with cooldown
 
 ---
 
@@ -130,6 +134,7 @@ Screenshots from a live session (July 10, 2026).
 - **SQLite history search** across past lines
 - **Export** console log to `.txt`
 - Color-coded lines (tells, errors, loot, macros)
+- Suggested rule actions can surface here as one-click buttons in the event feed
 
 ---
 
@@ -144,7 +149,7 @@ Screenshots from a live session (July 10, 2026).
 - **Nav path preview** + mesh sample ring when bridge v4 is loaded
 - Click a map dot or list row to **target**
 - **Watchlist** — toast / sound / both; optional **match faction/con**
-- Background spawn polling while other tabs are active (throttled in crew-perf mode)
+- Background spawn polling while other tabs are active (**throttled** when crew size ≥ perf threshold)
 - Long lists are chunked for overlay performance
 
 ---
@@ -160,10 +165,11 @@ Screenshots from a live session (July 10, 2026).
 - Sync model badges (`EZ` / `CAT`) and **stale export** warnings
 - Search by name, slot, or stat
 - Misconfig coach surfaces stale EZInventory / missing bridge after setup
+- Feeds loot-row intel (upgrade Δ / redundant) when comparing worn gear
 
 ---
 
-### 5. Loot — AdvLoot, corpse, filters, peers
+### 5. Loot — AdvLoot, corpse, filters, peers, raid council
 
 #### Active loot
 
@@ -176,8 +182,8 @@ Screenshots from a live session (July 10, 2026).
 - `Loot.ini` rule badges + quick Keep / Ignore
 - Shared loot peer dropdown, Give → peer, Set all shared → peer
 - Optional **auto-greed under copper threshold** (Settings) with audit trail
-- Loot row intel: who can use / **redundant** badge / worn-slot upgrade Δ
-- **Raid loot council** + rotation policies (round-robin, need-before-greed, DKP ledger) + history
+- Loot row intel: **who can use** / **redundant** badge / worn-slot **upgrade Δ**
+- **Raid loot council** + rotation policies (round-robin, need-before-greed, DKP ledger) + history — auto-batch clear decisions; surface conflicts for a human
 
 #### Loot.ini filters
 
@@ -208,7 +214,8 @@ Screenshots from a live session (July 10, 2026).
 - Bind rows with indexed **Gate** / **Succor**
 - Camp save / load / delete
 - MQ2Nav status badges (Idle / Navigating / Paused)
-- **Path / ETA** and **failure reasons** when nav can’t run (bridge v4)
+- **Path / ETA** and **failure reasons** when nav can’t run (bridge v4: no plugin, no mesh, path blocked)
+- Path preview also draws on the Spawns minimap
 - Nav Target, Pause, Stop
 - **Nav to Loc** (X / Y → `/nav loc`)
 
@@ -224,6 +231,7 @@ Screenshots from a live session (July 10, 2026).
 - Per-box Follow / Invite / Pause
 - **One-click reconnect** + visible backoff when degraded
 - **Summary density** mode for large crews (expand on demand)
+- **Crew perf threshold** — above N boxes, non-critical polls (e.g. spawn radar) throttle so vitals/alerts/loot stay snappy
 - Broadcast presets (Camp All, EQBC / DanNet follow+invite, Pause Macros)
 - Custom broadcast + **save new presets**
 - **Except main** queue — send to all boxes except the main role
@@ -241,10 +249,11 @@ Screenshots from a live session (July 10, 2026).
 - **Categories** with filter chips
 - **Per-character hotbutton sets** (Global or named toon)
 - **Import / export JSON** + copy set across characters
+- Can be triggered from **automation rules** by label
 
 ---
 
-### 9. Plugins — load / unload + INI deep-link
+### 9. Plugins — load / unload + INI deep-link + deps
 
 ![Plugins tab](docs/screenshots/09-plugins.png)
 
@@ -252,6 +261,7 @@ Screenshots from a live session (July 10, 2026).
 - Toggle load / unload (warns when macros depend on a plugin)
 - Macro dependency hints (“used by N macro(s)”)
 - **INI** button opens the matching config file in the INI editor
+- Full **dependency graph** also available under Settings (plugin → macros → hotbuttons)
 
 ---
 
@@ -290,14 +300,14 @@ Screenshots from a live session (July 10, 2026).
 
 ---
 
-### 13. Settings — appearance, loot automation, session, LAN
+### 13. Settings — appearance, loot, session, remote, tips
 
 ![Settings tab](docs/screenshots/13-settings.png)
 
 - Theme / accent / font scale / overlay opacity
 - **Ghost panel** + **Ghost feed** opacity (per-element transparency)
 - OBS / screen-capture exclude
-- Optional **performance HUD** (+ per-box cost breakdown)
+- Optional **performance HUD** (+ **per-box cost** breakdown)
 - **Crew perf threshold** + Boxes density (cards / summary)
 - **Loot auto-greed copper threshold**
 - **Config bundle** export / import (versioned JSON of hotbuttons, loot peers, boxes, alerts, watchlist, settings)
@@ -342,6 +352,7 @@ Honest remaining work before any public beta:
 - [ ] Deeper multi-pid inventory cache for cross-box “who can use”
 - [ ] Further performance polish for very large (12+) box crews
 - [ ] Public docs beyond this preview
+- [ ] Fresh screenshots that show Round 2 UI (rules builder, council, remote banner, mobile)
 
 **Expect bugs and breaking changes.** This preview shows direction, not a finished product.
 
@@ -375,4 +386,4 @@ Honest remaining work before any public beta:
 
 ---
 
-*Last updated: July 10, 2026 (Round 2) — development preview for [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 10, 2026 (Round 2 — full description pass) — development preview for [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
