@@ -95,7 +95,7 @@ On supported EMU builds, standing can resolve from FactionTable without a visibl
 - **Compact** — vitals-focused strip
 - **Ghost** — transparent panels over the EQ window
 - **Sidebar** — collapse to icons
-- **Hide/show window** — **Ctrl+Shift+O** (global). Not Ctrl+Z (Undo).
+- **Hide/show window** — **Ctrl+Z** (dedicated overlay window only — never your normal browser)
 - Sidebar brand shows an **EQ Emulator only** badge
 
 ## Privacy
