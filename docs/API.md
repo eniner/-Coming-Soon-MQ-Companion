@@ -1,6 +1,6 @@
 # MQ Overlay Companion — HTTP API (local)
 
-> **EverQuest emulator only.** Endpoints assume MacroQuest + an EQ emulator client via `MQ2OverlayBridge2` (bridge API **v7**). Not for Daybreak Live.
+> **EverQuest emulator only.** Endpoints assume MacroQuest + an EQ emulator client via `MQ2OverlayBridge2` (bridge API **v8**). Not for Daybreak Live. Sessions without a valid EMU handshake (`client_kind`, `mq_build`, `client_date`) are rejected.
 
 Base URL: `http://127.0.0.1:38111` (port may scan 38111–38130).
 

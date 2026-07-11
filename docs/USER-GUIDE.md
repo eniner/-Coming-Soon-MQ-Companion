@@ -10,21 +10,28 @@ Local Windows companion + web dashboard for MacroQuest **EMU** multibox crews. T
 
 | Required | Notes |
 |----------|--------|
-| EverQuest **emulator** client | RoF2-era EMU builds |
-| MacroQuest | Matching your EMU install |
-| `MQ2OverlayBridge2.dll` | Bridge API **v7** |
+| EverQuest **emulator** client | RoF2-era EMU (`client_date` allowlist, e.g. `20130510`) |
+| MacroQuest **Emu** build | Live / Test MQ builds are rejected |
+| `MQ2OverlayBridge2.dll` | Bridge API **v8** (EMU handshake required) |
 | Windows | Companion hosts the dashboard locally |
 
 **Not supported:** Daybreak Live EverQuest, Live Test, or any Live client.
+
+### EMU hard gates (v8)
+
+1. **Compile-time** — bridge will not build for Live/Test (`IS_EMU_CLIENT` required).
+2. **Plugin init** — refuses to load if client date / eqgame version looks like Live; auto-unloads.
+3. **Pipe handshake** — every state frame must include `client_kind:"emu"`, `mq_build:"Emu"`, and an allowlisted `client_date`. Companion drops the session otherwise (`health: emu_blocked`).
+4. **eqgame.exe fingerprint** — companion skips processes whose PE version string looks like a modern Live build.
+
+**Bridge API expected: v8.** If a box shows an API mismatch or `emu_blocked`, unload/reload the current EMU bridge DLL.
 
 ## Quick start
 
 1. Build / copy the bridge DLL into your MQ `plugins` folder as `MQ2OverlayBridge2.dll`.
 2. In your **EMU** client: `/plugin MQ2OverlayBridge2` (or add to autoload via the Setup Wizard).
 3. Launch **OverlayCompanion** — it opens the dashboard in Edge/WebView.
-4. Confirm the Boxes tab shows each EQ **emulator** client as **Connected**.
-
-**Bridge API expected: v7.** If a box shows an API mismatch, unload/reload the plugin.
+4. Confirm the Boxes tab shows each EQ **emulator** client as **Connected** (not `emu_blocked`).
 
 ## Core tabs
 

@@ -66,7 +66,7 @@ flowchart LR
 
 1. **Web dashboard** — `http://127.0.0.1:38111/` (+ optional `/mobile.html`)
 2. **Overlay Companion** — hosts UI, SQLite store, icon atlas, rules/alerts, HTTP APIs
-3. **MQ2OverlayBridge** — in-game MQ plugin for **EMU** (deployed as `MQ2OverlayBridge2.dll`, **API v7**)
+3. **MQ2OverlayBridge** — in-game MQ plugin for **EMU** (deployed as `MQ2OverlayBridge2.dll`, **API v8**)
 4. **Optional data** — EZInventory exports, UltDev item catalog, `Loot.ini`, MQ2Nav / `.navmesh`
 
 The companion auto-detects connected **EQ emulator** clients. Switch boxes from the top bar; every tab follows the selected character.
@@ -205,7 +205,7 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 ### Cross-cutting systems
 | System | Capability |
 |--------|------------|
-| **Bridge API v7** | Pipe + actor transport; EMU standing sources; Detour mesh dump; class/item gates; session events |
+| **Bridge API v8** | Pipe + actor transport; EMU handshake; standing sources; Detour mesh dump; class/item gates |
 | **SQLite store** | Chat history, audit, spawn snapshots, loot history, usage tips, rule cooldowns |
 | **Audit log** | Loot / INI / broadcast / plugin / macro / reconnect / config / remote → Events |
 | **Inventory sync** | Bridge presence + EZ stats + catalog icons + crew cache |
@@ -364,6 +364,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 - [x] 12+ box crew performance polish
 - [x] Public User Guide + API docs
 - [x] Explicit **EverQuest emulator only** product positioning
+- [x] EMU hard gates: compile-time, plugin init, handshake, eqgame fingerprint
 
 **Expect bugs and breaking changes.** This preview shows direction, not a finished product.
 
@@ -384,7 +385,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 |------|--------|
 | Target platform | **EQ emulator + MacroQuest only** |
 | Daybreak Live | **Not supported** |
-| Core bridge pipe + API **v7** | Working in EMU dev |
+| Core bridge pipe + API **v8** + EMU gates | Working in EMU dev |
 | Web dashboard (Focus / Compact / Ghost) | Working |
 | Automation rules + alerts | Working (preview) |
 | Inventory + icons + crew who-can-use | Working |
