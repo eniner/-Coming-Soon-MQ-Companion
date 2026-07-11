@@ -1,5 +1,7 @@
 ﻿# Coming Soon — release mirror & signing secrets
 
+> **EverQuest emulator only.** Installers target MacroQuest + EQ emulator clients — not Daybreak Live.
+
 This public repo hosts **beta installers** as GitHub Releases.
 
 ## Download

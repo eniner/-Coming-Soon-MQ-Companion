@@ -1,5 +1,7 @@
 # MQ Overlay Companion — HTTP API (local)
 
+> **EverQuest emulator only.** Endpoints assume MacroQuest + an EQ emulator client via `MQ2OverlayBridge2` (bridge API **v7**). Not for Daybreak Live.
+
 Base URL: `http://127.0.0.1:38111` (port may scan 38111–38130).
 
 Auth: when `lan_token` is set, **POST** (and remote **GET** `/api/*`) require `Authorization: Bearer <token>`. Session tokens (`s_…`) may substitute; `viewer` scope cannot run most mutating routes.
@@ -16,7 +18,7 @@ Rate limits (remote IPs only): ~40 mutating / 180 total requests per minute per 
 |--------|------|--------|
 | GET | `/api/state` | Latest game state |
 | GET | `/api/characters` | Crew summary (`bridge_api_expected`, class, vitals) |
-| GET | `/api/spawns` | Nearby spawns (con/standing/faction/race) |
+| GET | `/api/spawns` | Nearby spawns (con/standing/faction/race; EMU FactionTable when available) |
 | GET | `/api/inventory` | Selected box inventory |
 | GET | `/api/inventory/crew` | All connected boxes’ inventories (who-can-use cache) |
 | GET | `/api/loot` | Adv loot lists |

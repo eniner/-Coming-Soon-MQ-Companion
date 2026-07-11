@@ -1,34 +1,53 @@
 # MQ Overlay Companion — User Guide
 
-Local Windows companion + web dashboard for MacroQuest multibox crews. The companion talks to **MQ2OverlayBridge** (deploy as `MQ2OverlayBridge2.dll`) over a named pipe and serves `http://127.0.0.1:38111/`.
+> **EverQuest emulator only.**  
+> This companion is built for MacroQuest on **EQ emulator (RoF2-era)** clients.  
+> It is **not** for Daybreak Live and will not be supported on Live.
+
+Local Windows companion + web dashboard for MacroQuest **EMU** multibox crews. The companion talks to **MQ2OverlayBridge** (deploy as `MQ2OverlayBridge2.dll`) over a named pipe and serves `http://127.0.0.1:38111/`.
+
+## Requirements
+
+| Required | Notes |
+|----------|--------|
+| EverQuest **emulator** client | RoF2-era EMU builds |
+| MacroQuest | Matching your EMU install |
+| `MQ2OverlayBridge2.dll` | Bridge API **v7** |
+| Windows | Companion hosts the dashboard locally |
+
+**Not supported:** Daybreak Live EverQuest, Live Test, or any Live client.
 
 ## Quick start
 
 1. Build / copy the bridge DLL into your MQ `plugins` folder as `MQ2OverlayBridge2.dll`.
-2. In-game: `/plugin MQ2OverlayBridge2` (or add to autoload via the Setup Wizard).
+2. In your **EMU** client: `/plugin MQ2OverlayBridge2` (or add to autoload via the Setup Wizard).
 3. Launch **OverlayCompanion** — it opens the dashboard in Edge/WebView.
-4. Confirm the Boxes tab shows each EQ client as **Connected**.
+4. Confirm the Boxes tab shows each EQ **emulator** client as **Connected**.
 
-**Bridge API expected: **v6**. If a box shows an API mismatch, unload/reload the plugin.
+**Bridge API expected: v7.** If a box shows an API mismatch, unload/reload the plugin.
 
 ## Core tabs
 
 | Tab | Purpose |
 |-----|---------|
-| Status | Vitals, target, group, casting, rules suggestions |
-| Boxes | Crew overview, roles, broadcast, reconnect |
-| Spawns | Nearby list + minimap; nav path / reachable mesh overlay |
-| Inventory | Per-box bag/worn; icons when available |
-| Loot | Advanced loot + Loot.ini peers + raid council / rotation |
-| Nav | Zone binds, gate gem, MQ2Nav status / ETA |
-| Plugins / Macros / Lua | Load/unload and editors |
-| Settings | Theme, LAN remote, session tokens, setup wizard |
+| Status | Vitals, target, group, casting, alerts, automation rules |
+| Console | Live game/MQ/macro/Lua log, SQLite search, export, send commands |
+| Spawns | Nearby list + minimap legend; nav path / mesh overlay; watchlist |
+| Inventory | Worn/bags/bank; icons; EZInventory + catalog sync; stale-export coach |
+| Loot | AdvLoot + Loot.ini peers + raid council / rotation |
+| Nav | Zone binds, gate/succor, MQ2Nav status / ETA / camps |
+| Boxes | Crew overview, roles, broadcast, reconnect, Ctrl+1–9 |
+| Hotbuttons | Global/per-character command sets |
+| Plugins / Macros / Lua | Load/unload, editors, bulk stop/unload |
+| INI | Grouped Config browser + safe save |
+| Settings | Theme, Ghost, LAN remote, session tokens, setup wizard |
 
 ## Multibox tips
 
 - Assign roles (main / puller / looter / healer) on box cards.
-- Use broadcast presets for common `/bc` patterns.
+- Use broadcast presets for common `/bc` / DanNet patterns.
 - At **12+ boxes**, companion and UI automatically slow spawn/inventory polls and paginate the Boxes grid. Set **Crew perf threshold** and **Boxes density** under Settings.
+- **Ctrl+1–9** switches the active box from the top bar.
 
 ## Loot “who can use”
 
@@ -44,23 +63,30 @@ The Loot tab uses a multi-pid inventory cache (`GET /api/inventory/crew`) plus i
 
 ## Nav mesh preview
 
-Requires MQ2Nav loaded with a mesh for the zone. The minimap shows:
+Requires MQ2Nav loaded with a mesh for the zone on your **EMU** install. The minimap shows:
 
 - Blue polyline toward the current target (path preview)
-- Green **triangle/edge wireframe** from a PathExists grid (`mesh_tris` / `mesh_edges`)
+- Green wireframe from Detour `.navmesh` poly dump when available (`mesh_mode: detour_polys`)
+- Fallback PathExists triangle/edge grid (`mesh_mode: pathexists_tris`)
 
-A full Detour/Recast polygon dump still needs MQ2Nav internals not exposed via TLOs.
-
-## Faction / standing
+## Faction / standing (EMU)
 
 Spawn JSON includes:
 
 - `con` — level-consider color (`GetConLevel`)
-- `standing` — consider-chat standing (ALLY…SCOWLING) when known, else mirrors `con`
+- `standing` — FactionTable / FactionManager / consider-chat standing when known
 - `faction` / `race` — race string as watchlist grouping key
-- `faction_source` — `consider` | `race_proxy`
+- `faction_source` — `faction_table` | `faction_manager` | `consider` | `race_proxy`
 
-The bridge auto-`/consider`s the current target (throttled) and parses the chat reply. FactionManagerClient offsets remain unmapped.
+On supported EMU builds, standing can resolve from FactionTable without a visible `/consider`. The bridge may still auto-consider the current target (throttled) to learn IDs when needed.
+
+## UI chrome
+
+- **Focus** — denser overlay; Exit Focus / Esc / Ctrl+Shift+F always works
+- **Compact** — vitals-focused strip
+- **Ghost** — transparent panels over the EQ window
+- **Sidebar** — collapse to icons
+- Sidebar brand shows an **EQ Emulator only** badge
 
 ## Privacy
 
