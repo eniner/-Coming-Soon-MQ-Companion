@@ -24,6 +24,8 @@ Local Windows companion + web dashboard for MacroQuest **EMU** multibox crews. T
 3. **Pipe handshake** — every state frame must include `client_kind:"emu"`, `mq_build:"Emu"`, and an allowlisted `client_date`. Companion drops the session otherwise (`health: emu_blocked`).
 4. **eqgame.exe fingerprint** — companion skips processes whose PE version string looks like a modern Live build.
 
+Blocked sessions report `health:"emu_blocked"` and do not accept commands. See also [EMU hard gates](EMU-GATES.md).
+
 **Bridge API expected: v8.** If a box shows an API mismatch or `emu_blocked`, unload/reload the current EMU bridge DLL.
 
 ## Quick start

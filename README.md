@@ -2,7 +2,8 @@
 
 > **Built for EverQuest emulator only.**  
 > Not for Daybreak Live. Not tested on Live. Not supported on Live.  
-> Targets **MacroQuest + RoF2-era EQ emulator clients** (private build; public beta zip).
+> Targets **MacroQuest + RoF2-era EQ emulator clients** (private build; public beta zip).  
+> Screenshots and docs reflect **bridge API v8** with **EMU hard gates**. Download from [Releases](https://github.com/eniner/-Coming-Soon-MQ-Companion/releases) — source remains private.
 
 ---
 
@@ -12,11 +13,11 @@
 
 | | |
 |--|--|
-| **Supported** | EverQuest **emulator** clients (RoF2-era EMU) with MacroQuest |
+| **Supported** | EverQuest **emulator** clients (RoF2-era EMU) with MacroQuest **Emu** |
 | **Not supported** | Daybreak **Live** EverQuest, Test, or any Live client build |
-| **Why** | Bridge offsets, FactionTable / standing, AdvLoot, and MQ2Nav mesh paths are EMU-specific |
+| **Enforced by** | Compile-time · plugin init · pipe handshake · `eqgame.exe` fingerprint ([details](docs/EMU-GATES.md)) |
 
-If you are on Live: **do not install this.** It will not work and is not maintained for Live.
+If you are on Live: **do not install this.** It will not load or connect.
 
 Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby) with `MQ2OverlayBridge2` connected.
 
@@ -26,24 +27,30 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 | | |
 |--|--|
-| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.2 |
-| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.2-win32.zip` |
-| **Updater manifest** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.2/updates.json |
+| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.3 |
+| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.3-win32.zip` |
+| **Updater manifest** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.3/updates.json |
+| **Bridge API** | **v8** (EMU handshake required) |
 
 **Install (EMU + MacroQuest only):** expand the zip → run `scripts\install-overlay.ps1` → in your EMU client `/plugin MQ2OverlayBridge2` → open `http://127.0.0.1:38111/`.
 
 Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is embedded for tray/desktop.
 
-See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL.
+See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
 
-### What’s new in 0.7.0-beta.2
+### What’s new in 0.7.0-beta.3
+- **EMU hard gates** — compile-time refuse Live builds; plugin auto-unloads on non-EMU client date / Live-looking `eqgame` version
+- **Bridge API v8 handshake** — requires `client_kind`, `mq_build`, `client_date` on every state frame; companion reports `emu_blocked` and refuses commands otherwise
+- **eqgame.exe fingerprint** — skips processes with Live-style PE version strings before pipe connect
+- Sidebar **EQ Emulator only** badge; docs/UI call out EMU-only clearly
+- Signed win32 zip (`OverlayCompanion.exe` + `MQ2OverlayBridge2.dll`)
+
+### From 0.7.0-beta.2 (still included)
 - Accent-driven primary buttons; labeled compact vitals; endurance color distinct from HP
 - Spawns map legend + facing wedge; side-by-side map/list layout
 - Focus mode: Exit Focus button, Esc / Ctrl+Shift+F always works
-- Main content scrolls on Windows (Status/Settings no longer clipped)
-- Larger default window (1280×900); branded desktop/tray icon
+- Main content scrolls on Windows; larger default window (1280×900); branded icon
 - Stale EZInventory badge copies `/lua run ezinventory`; plugin/Lua bulk actions; Ctrl+1–9 box hotkeys
-- **EMU-only positioning** called out in product docs and UI
 
 ---
 
@@ -339,6 +346,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 ## Public docs
 
 - [User Guide](docs/USER-GUIDE.md) — install & tabs (**EMU only**)
+- [EMU hard gates](docs/EMU-GATES.md) — how Live is blocked (compile / init / handshake / fingerprint)
 - [API](docs/API.md)
 - [Packaging](docs/PACKAGING.md)
 
@@ -352,7 +360,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 **Recently shipped (checkbox history):**
 
 - [x] Production code-signing certificate in CI secrets (local sign path + pipeline exist)
-- [x] Public beta / installers published to this repo (`v0.7.0-beta.2`)
+- [x] Public beta / installers published to this repo (`v0.7.0-beta.3`)
 - [x] UI polish pass (accent, focus exit, scroll, branded icon)
 - [x] Fresh screenshots (July 11 EMU gallery above)
 - [x] FactionTable / FactionManager standing without visible `/consider` (EMU)
@@ -364,7 +372,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 - [x] 12+ box crew performance polish
 - [x] Public User Guide + API docs
 - [x] Explicit **EverQuest emulator only** product positioning
-- [x] EMU hard gates: compile-time, plugin init, handshake, eqgame fingerprint
+- [x] EMU hard gates: compile-time, plugin init, handshake, eqgame fingerprint (`v0.7.0-beta.3`)
 
 **Expect bugs and breaking changes.** This preview shows direction, not a finished product.
 
@@ -403,4 +411,4 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 
 ---
 
-*Last updated: July 11, 2026 — EMU-only positioning + refreshed gallery — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 11, 2026 — v0.7.0-beta.3 EMU hard gates (API v8) — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
