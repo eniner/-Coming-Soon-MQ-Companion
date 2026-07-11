@@ -9,7 +9,7 @@ Local Windows companion + web dashboard for MacroQuest multibox crews. The compa
 3. Launch **OverlayCompanion** — it opens the dashboard in Edge/WebView.
 4. Confirm the Boxes tab shows each EQ client as **Connected**.
 
-Bridge API expected: **v5**. If a box shows an API mismatch, unload/reload the plugin.
+**Bridge API expected: **v6**. If a box shows an API mismatch, unload/reload the plugin.
 
 ## Core tabs
 
@@ -47,19 +47,20 @@ The Loot tab uses a multi-pid inventory cache (`GET /api/inventory/crew`) plus i
 Requires MQ2Nav loaded with a mesh for the zone. The minimap shows:
 
 - Blue polyline toward the current target (path preview)
-- Green dots for `PathExists` ring samples (reachable points, not a full Recast triangle dump)
+- Green **triangle/edge wireframe** from a PathExists grid (`mesh_tris` / `mesh_edges`)
 
-Full triangle wireframe would need MQ2Nav internals that are not exposed via TLOs.
+A full Detour/Recast polygon dump still needs MQ2Nav internals not exposed via TLOs.
 
 ## Faction / standing
 
 Spawn JSON includes:
 
-- `con` / `standing` — level-consider color (`GetConLevel`)
-- `faction` / `race` — race string used as a watchlist grouping key
-- `faction_source: "race_proxy"`
+- `con` — level-consider color (`GetConLevel`)
+- `standing` — consider-chat standing (ALLY…SCOWLING) when known, else mirrors `con`
+- `faction` / `race` — race string as watchlist grouping key
+- `faction_source` — `consider` | `race_proxy`
 
-True FactionManager standing needs `FactionManagerClient::GetFactionStanding` offsets (still unmapped on this client build).
+The bridge auto-`/consider`s the current target (throttled) and parses the chat reply. FactionManagerClient offsets remain unmapped.
 
 ## Privacy
 
