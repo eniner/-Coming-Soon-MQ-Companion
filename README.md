@@ -1,30 +1,19 @@
 # MQ Overlay Companion — Coming Soon
 
 > **Work in progress — not a public release.**  
-> This repository is a **preview only**. Screenshots and feature descriptions reflect the current private build. **No source code, binaries, or install packages are published here.**
+> This repository is a **preview only**. Screenshots and feature descriptions reflect the current private build (**bridge API v7**, July 11 2026). **No source code, binaries, or install packages are published here.**
 
 ---
 
 ## What is it?
 
-**MQ Overlay Companion** is a desktop + browser overlay for [MacroQuest](https://www.macroquest.org/) that gives you one modern dashboard to **monitor, control, and automate** your EverQuest boxes — without digging through a dozen in-game windows and `.ini` files.
+**MQ Overlay Companion** is a Windows desktop + local browser dashboard for [MacroQuest](https://www.macroquest.org/) that gives you one modern control surface for EverQuest boxes — vitals, automation, loot, nav, plugins, macros, Lua, and config — without juggling a dozen in-game windows and `.ini` files.
 
-Built for **multi-boxers** and **solo power users** who want:
-
-- Live character vitals, target, group, buffs, casting/gems, and zone info in one place
-- Remote control of macros, plugins, Lua scripts, hotbuttons, and MQ commands
-- **Composable automation rules** (conditions → toast / sound / suggest / broadcast / command) with cooldowns
-- Inventory and loot with real item icons, stats, copper value, peer routing, **raid loot council / rotation**, and upgrade intel
-- Spawn radar with a pan/zoom zone minimap, watchlists, con/standing/faction labels, and **Detour navmesh poly wireframe + nav path preview** (bridge **v7**)
-- Multi-box roles, broadcast presets, crew health / reconnect, and **12+ box performance modes** (staggered polls, paginated Boxes)
-- Config portability (bundle export/import), session summary (XP/hr, deaths, loot copper), and SQLite history
-- A clean UI beside EQ — **Focus / Compact / Ghost** — plus optional **LAN + mobile viewer** with **session revoke UI**, rate limits, and **update checks** (`/mobile.html`)
-
-It is **not** a public release product yet. This repo only documents the private build’s direction.
+Built for **multi-boxers** and **solo power users**.
 
 ---
 
-## How it works (high level)
+## How it works
 
 ```mermaid
 flowchart LR
@@ -33,364 +22,288 @@ flowchart LR
   C --> D[EverQuest / MacroQuest]
 ```
 
-1. **Web dashboard** — local browser UI (`http://127.0.0.1:38111/`); optional **mobile** view at `/mobile.html`
-2. **Overlay Companion** — Windows app; hosts the UI, SQLite store (chat/audit/loot history/usage), icon atlas, rules engine, and HTTP APIs
-3. **MQ2OverlayBridge** — in-game MQ plugin that streams live data and runs commands (**API v7**)
-4. **Optional data sources** — EZInventory exports, UltDev item catalog, `Loot.ini`, MQ2Nav TLOs, etc.
+1. **Web dashboard** — `http://127.0.0.1:38111/` (+ optional `/mobile.html`)
+2. **Overlay Companion** — hosts UI, SQLite store, icon atlas, rules/alerts, HTTP APIs
+3. **MQ2OverlayBridge** — in-game MQ plugin (deployed as `MQ2OverlayBridge2.dll`, **API v7**)
+4. **Optional data** — EZInventory exports, UltDev item catalog, `Loot.ini`, MQ2Nav / `.navmesh`
 
-The companion auto-detects connected EQ clients. Switch boxes from the top bar; every tab follows the selected character. When LAN is enabled, a persistent banner shows remote access is on; short-lived **viewer/control session tokens** can be issued, listed, and revoked for phones or other devices.
+The companion auto-detects connected EQ clients. Switch boxes from the top bar; every tab follows the selected character.
 
 ---
 
-## UI overview
+## Full capability list (current private build)
+
+This is everything the product **does and can do today**.
+
+### Live monitoring & character control
+- Live **HP / mana / endurance / XP** bars with color ramps
+- Character, level, zone, **XYZ**, role badge, alert count, HP ring
+- **Target** + **group** panels (Assist / Follow / Invite helpers)
+- **All Boxes** overview cards from any Status view
+- Buffs / songs + casting / gem status
+- In-game HUD toggle from the dashboard
+- Send arbitrary **MQ `/commands`** to the selected box
+- Per-character **alert profiles** (low HP, tells, spawn watch, sound)
+- Server-side alerts that toast even when you are on another tab
+- **Automation rules** on Status: AND conditions → toast / sound / suggest button / broadcast preset / command (per-rule cooldown)
+
+### Console & history
+- Live stream of game / MQ / macro / Lua chat over the bridge pipe
+- Filter chips: All / Game / Macros / Lua
+- Command input + clear
+- **SQLite history search** across past lines
+- **Export** console log to `.txt`
+- Color-coded lines (tells, errors, loot, macros)
+- Suggested rule actions can surface as one-click buttons
+
+### Spawns, radar & faction standing
+- Live spawn list: name, type, level, distance / bearing
+- **Con color**, **standing**, **faction / race** labels
+- `faction_source`: `faction_table` | `faction_manager` | `consider` | `race_proxy`
+- Faction standing without visible `/consider` (FactionTable / FactionManager when available; silent auto-consider learns IDs)
+- Search + type filters (NPC / PC / Pet / Merc / Corpse)
+- **Zone minimap** — pan, zoom, follow-me, hover tooltips
+- **Nav path preview** + mesh wireframe (`mesh_mode`: `detour_polys` or `pathexists_tris`)
+- Click map/list to **target**
+- **Watchlist** — toast / sound / both; optional match faction/con
+- Background spawn polling (throttled at large crew sizes); chunked lists for perf
+
+### Inventory & gear intel
+- Merges **live bridge inventory** + **EZInventory JSON** + **UltDev catalog**
+- Native **item icons** from the EQ client atlas
+- Stat lines (AC, HP, mana, attributes, resists, heroic, …)
+- Filters: All / Worn / Bags / Bank / Has stats + search
+- Sync badges (`EZ` / `CAT`) and **stale export** warnings
+- Class / race / level gates for **who can use**
+- Feeds loot-row intel: **upgrade Δ**, **redundant** badge
+
+### Loot — AdvLoot, corpse, filters, peers, raid council
+- Personal + shared AdvLoot (need / greed / leave)
+- Corpse loot mirror + **Loot All**
+- Item icons + **copper value** when resolvable
+- `Loot.ini` rule badges + quick Keep / Ignore
+- Shared loot peer dropdown, Give → peer, Set all shared → peer
+- Optional **auto-greed under copper threshold** with audit “why”
+- Who-can-use via **multi-pid crew inventory cache**
+- **Raid loot council** + rotation (none / round-robin / need-before-greed / DKP ledger) + history
+- Full **Loot.ini** editor with `.bak` backup, Keep/Ignore/Destroy/Sell/Quest
+- Export / import filter templates as JSON
+- Default peer + **regex auto-assign policies** + per-item peer routes
+
+### Navigation (MQ2Nav)
+- Zone / bind / gate status + live position
+- Bind rows with indexed **Gate** / **Succor** / Set Bind
+- Camp save / load / delete
+- MQ2Nav Idle / Navigating / Paused + Nav Target / Pause / Stop
+- **Path length / ETA** and failure reasons (plugin missing, no mesh, path blocked, no target)
+- **Nav to Loc** (`/nav loc`)
+- Spawns minimap: path preview + **Detour `.navmesh` poly dump** (fallback PathExists grid tris)
+
+### Multi-box crew (Boxes)
+- Card per connected client: vitals, zone, target, bridge health
+- **Roles** per toon (main, puller, looter, healer, …) in `boxes.json`
+- Follow / Invite / Pause / **Reconnect** + backoff countdown
+- Summary density mode for large crews
+- **Crew perf threshold** — throttle non-critical polls; at **12+** stagger pipe requests + paginate Boxes
+- Broadcast to all / role / except-main
+- Broadcast presets (Camp All, EQBC / DanNet follow+invite, Pause Macros) + custom presets
+- Loot routing policies by role + regex
+
+### Hotbuttons
+- Multi-step command buttons (delays supported)
+- Run on selected character; edit / add / delete
+- **Drag-to-reorder**, categories, per-character or Global sets
+- Import / export JSON + copy set across characters
+- Triggerable from automation rules by label
+
+### Plugins
+- Loaded vs available with search (full MQ plugin library)
+- Toggle load / unload
+- Macro dependency hints (“used by N macros”)
+- **INI** deep-link into the INI editor
+- Dependency graph also in Settings (plugin → macros → hotbuttons)
+
+### Macros
+- Full `.mac` library with search, pin, recent
+- Run / Stop / Pause
+- Missing-plugin dependency hints
+- Inline editor: syntax highlight, save with backup / conflict check / line-count confirm
+
+### Lua
+- Lists scripts under MQ `lua/` (folder groups)
+- Per-script run / stop + **Stop All**
+- Inline Lua editor: highlight, save, recent files
+
+### INI config browser
+- Browses MQ `Config` with grouped categories (KissAssist, MuleAssist, plugins, …)
+- Syntax-highlighted editor + line gutter
+- Save with **mtime conflict detection** + automatic `.bak`
+- Unsaved-change indicator
+
+### Settings, remote, packaging
+- Theme / accent / font scale / overlay opacity
+- **Ghost** panel + feed opacity; Focus / Compact / Sidebar modes
+- Hide dashboard from OBS / screen capture
+- Optional **performance HUD** (+ per-box cost)
+- Crew perf threshold + Boxes density
+- Loot auto-greed copper threshold
+- **Config bundle** export / import (versioned JSON)
+- **Session summary** — XP/hr, deaths, loot copper, disconnects, zones
+- **Updates** — `/api/version` + Settings check against `updates.json`
+- **LAN remote access** — master token, allowlist, read-only mode
+- **Session tokens** (viewer/control, ~1h) with device label, list, revoke / revoke all, rate limits
+- **Mobile viewer** at `/mobile.html`
+- Opt-in local usage tips (SQLite only — never phones home)
+- Setup Wizard + misconfig coach (stale EZInventory, missing DLL, version mismatch)
+- Install MQ **autoload** macro
+- Packaging scripts + optional Authenticode; CI publish on `overlay-v*` tags
+
+### Cross-cutting systems
+| System | Capability |
+|--------|------------|
+| **Bridge API v7** | Pipe + actor transport; standing sources; Detour mesh dump; class/item gates; session events |
+| **SQLite store** | Chat history, audit, spawn snapshots, loot history, usage tips, rule cooldowns |
+| **Audit log** | Loot / INI / broadcast / plugin / macro / reconnect / config / remote → Events |
+| **Inventory sync** | Bridge presence + EZ stats + catalog icons + crew cache |
+| **Alert + rules engines** | HP / tell / spawn watch + composable rules with cooldown |
+| **Deploy helpers** | `deploy-overlay.ps1`, `restart-companion.ps1`, `install-overlay.ps1` |
+
+---
+
+## UI map
 
 | Group | Tabs |
 |-------|------|
-| **Character** | Status (vitals + **automation rules**), Console, Spawns, Inventory, Loot (**council**), Nav |
-| **Automation** | Boxes (crew perf / density), Hotbuttons, Plugins (**deps**), Macros, Lua |
-| **Config** | INI, Settings (session, remote, tips, perf) |
+| **Character** | Status, Console, Spawns, Inventory, Loot, Nav |
+| **Automation** | Boxes, Hotbuttons, Plugins, Macros, Lua |
+| **Config** | INI, Settings |
 
-**Global chrome (all tabs):**
-
-- Character mini-card with HP ring, zone, level, **role**, and **alert count**
-- Per-box character switcher with health dots (`connected` / `degraded` / `no_bridge`)
-- Bridge connection status + **API version awareness** (expects bridge **v7**)
-- **Ctrl+K** command palette — tabs, macros, plugins, hotbuttons, watchlist, recent console lines, `/commands`
-- Notification center (bell) with history, **mute by category**, and **snooze**
-- **Focus** mode, collapsible / pin / icon **Sidebar**, **Compact** vitals bar, **Ghost** overlay (per-element opacity)
-- Persistent **Remote access ON** banner when LAN is enabled (+ `/mobile.html` viewer)
+**Global chrome:** character mini-card + HP ring, box switcher with health dots, bridge + API version, Ctrl+K palette, notification center (mute / snooze), Focus / Sidebar / Compact / Ghost, remote-access banner when LAN is on.
 
 ---
 
-## Today's updates (July 11, 2026 — installer / CI / standing / mesh)
+## Feature gallery (July 11, 2026)
 
-| Area | Today |
-|------|--------|
-| **Signed installer / updater** | `packaging/build-release.ps1` → zip + `updates.json` + optional **Authenticode** (`OV_SIGN_THUMBPRINT` / signtool); Settings **Check for updates** via `/api/version` + remote manifest |
-| **CI publishing pipeline** | `.github/workflows/overlay-companion.yml` — Win32 build, package artifacts, **GitHub Release** on `overlay-v*` tags |
-| **Faction standing** | `FactionTable` / `FactionManagerClient` standing without visible `/consider`; silent auto-consider learns faction IDs; `faction_source` = `faction_table` \| `faction_manager` \| `consider` |
-| **Mesh wireframe** | Native **Detour** polys from MQ2Nav `.navmesh` (`mesh_mode:"detour_polys"`); PathExists tris as fallback |
-
-**Bridge:** companion expects **API v7**. Reload: `/plugin MQ2OverlayBridge2`.
-
----
-
-## Earlier today (still-coming pass → API v5)
-
-| Area | Shipped |
-|------|--------|
-| **Hardened remote auth** | Device/session list + revoke; rate limits; remote bearer for `/api/*` |
-| **Nav mesh (v5)** | PathExists rings + PathLength ETA |
-| **Faction fields** | `standing` / `faction_source` + class on state/items |
-| **Crew inventory cache** | `GET /api/inventory/crew` for who-can-use |
-| **12+ crew polish** | Staggered polls + paginated Boxes |
-| **Public docs** | [User Guide](docs/USER-GUIDE.md) + [API](docs/API.md) |
-
----
-
-## Earlier (July 10, 2026 — Round 2)
-
-Shipped on top of the earlier July upgrade pass:
-
-| Area | Round 2 |
-|------|--------|
-| **Automation rules** | Visual rules builder on Status — composable conditions (HP, zone, not casting, …) → actions (toast, sound, suggest button, broadcast preset, command) with per-rule cooldown (`rules.json`) |
-| **Raid-scale loot** | Rotation modes: none / round-robin / need-before-greed+history / simple DKP ledger; **loot council** (pending across boxes, who’s next); loot history API |
-| **12+ box performance** | Crew perf threshold (throttles spawn polling at scale); Boxes **summary density**; perf HUD **per-box cost** breakdown |
-| **Nav depth (bridge v4)** | Path preview + mesh sample ring on minimap; **failure reasons** (MQ2Nav missing, no mesh, path blocked); ETA / distance |
-| **Remote beyond static LAN** | Short-lived **viewer/control session tokens** (1h); scoped permissions; `/mobile.html` read-only vitals/alerts + safe loot leave; remote banner |
-| **Loot / inventory intel** | “Who can use”, **redundant** badge, worn-slot **upgrade Δ** on loot rows |
-| **Dependency graph** | Settings panel: plugin → macros that use it (answer “what breaks if I unload this?”) |
-| **Personalization (opt-in)** | Local SQLite usage tips — **never phones home**; toggle in Settings |
-
----
-
-## Earlier (Round 1 — still available)
-
-| Area | New |
-|------|-----|
-| **Information architecture** | Collapsible nav groups, pin tabs, icon-only sidebar, Focus mode, richer status rail |
-| **Performance** | Signature-gated list renders, chunked long lists, status subpanel guards, optional perf HUD |
-| **Spawns** | Minimap pan / zoom / follow-me / tooltips; con color + faction/race labels; watch channels (toast / sound / both) + match faction |
-| **Loot** | Item copper **value**; Settings **auto-greed under copper threshold** with audit “why” |
-| **Editors** | Macro / Lua syntax highlight overlay, save line-count confirm, recent files |
-| **Hotbuttons** | Drag-to-reorder, import / export JSON, copy set across characters |
-| **Boxes** | One-click reconnect + backoff countdown on degraded boxes |
-| **Portability** | One-click **config bundle** export / import |
-| **Session** | On-demand **session summary** — XP/hr, deaths, loot copper, disconnects |
-| **Bridge API v3** | Loot `value`, spawn `con` / `faction`, `session_event` metrics (nav fields added in v4) |
-
-Everything in the feature gallery below includes Round 1, Round 2, and the July 11 still-coming pass.
-
----
-
-## Feature gallery
-
-Screenshots from a live session (July 10, 2026). Gallery images predate the July 11 auth/mesh/crew-cache pass; descriptions below include the **current** feature set.
-
----
+Fresh screenshots in **sidebar tab order** from a live RoF2 session (Valiant / Guild Lobby, bridge connected).
 
 ### 1. Status — command center
 
 ![Status tab](docs/screenshots/01-status.png)
 
-- Live vitals: HP, mana, endurance, XP (smooth bars + HP color ramp)
-- Character, level, zone, XYZ position
-- Target + group panels (Assist / Follow / Invite helpers)
-- **All Boxes** overview cards
-- Buffs / songs and casting / gem status
-- In-game HUD toggle
-- **Per-character alert profiles**: low HP, tells, spawn watch, sound
-- Server-side alert events (toasts even when you were on another tab)
-- Send arbitrary MQ commands
-- Status rail shows **role** + active alert count from any tab
-- **Automation rules** builder — AND conditions (HP below, zone is, not casting, …) → toast / sound / suggest action button / broadcast preset / command, with cooldown
-
----
+Vitals, identity cards, target/group, All Boxes overview, alerts, automation rules, command entry.
 
 ### 2. Console — live log + history
 
 ![Console tab](docs/screenshots/02-console.png)
 
-- Streams in-game / MQ / macro / Lua output over the bridge
-- Filter chips: All, Game, Macros, Lua
-- Command input with history
-- **SQLite history search** across past lines
-- **Export** console log to `.txt`
-- Color-coded lines (tells, errors, loot, macros)
-- Suggested rule actions can surface here as one-click buttons in the event feed
-
----
+Pipe-connected game/MQ/macro/Lua stream, SQLite search, export, send `/command`.
 
 ### 3. Spawns — radar + zone minimap
 
 ![Spawns tab](docs/screenshots/03-spawns.png)
 
-- Live spawn list: name, type, level, distance / bearing
-- **Con color** + **standing** (consider-chat when known) / **faction** / **race** (`faction_source`: `consider` | `race_proxy`)
-- Search + type filters (NPC / PC / Pet / Merc / Corpse)
-- **Zone minimap** — you at center; pan, zoom, follow-me, hover tooltips
-- **Nav path preview** + **Detour navmesh wireframe** (`mesh_mode:"detour_polys"`) when bridge **v7** is loaded
-- Click a map dot or list row to **target**
-- **Watchlist** — toast / sound / both; optional **match faction/con**
-- Background spawn polling while other tabs are active (**throttled** when crew size ≥ perf threshold)
-- Long lists are chunked for overlay performance
+Watchlist, follow-me map, con/standing/faction labels, target-from-list/map, mesh/path overlays when nav data is present.
 
----
-
-### 4. Inventory — icons, stats, sync badges
+### 4. Inventory — icons, stats, sync
 
 ![Inventory tab](docs/screenshots/04-inventory.png)
 
-- Merges **live bridge inventory** + **EZInventory JSON** + **UltDev catalog**
-- Native **item icons** from the EQ client atlas
-- Stat lines: AC, HP, mana, attributes, resists, heroic, etc.
-- Filter chips: All / Worn / Bags / **Bank** / Has stats
-- Sync model badges (`EZ` / `CAT`) and **stale export** warnings
-- Search by name, slot, or stat
-- Misconfig coach surfaces stale EZInventory / missing bridge after setup
-- Feeds loot-row intel (upgrade Δ / redundant) when comparing worn gear
+Bridge + EZInventory + UltDev catalog, worn/bags/bank filters, stale-export coach, item icons.
 
----
-
-### 5. Loot — AdvLoot, corpse, filters, peers, raid council
+### 5. Loot — AdvLoot, filters, peers, council
 
 #### Active loot
 
 ![Active loot](docs/screenshots/05-loot-active.png)
 
-- Personal + shared AdvLoot with need / greed / leave
-- Corpse loot mirror + **Loot All**
-- Item icons (bridge + catalog name fallback)
-- **Copper value** when the bridge can resolve it
-- `Loot.ini` rule badges + quick Keep / Ignore
-- Shared loot peer dropdown, Give → peer, Set all shared → peer
-- Optional **auto-greed under copper threshold** (Settings) with audit trail
-- Loot row intel: **who can use** (class + level via multi-pid crew inventory cache) / **redundant** badge / worn-slot **upgrade Δ**
-- **Raid loot council** + rotation policies (round-robin, need-before-greed, DKP ledger) + history — auto-batch clear decisions; surface conflicts for a human
+Personal/shared AdvLoot, corpse Loot All, raid rotation / council.
 
 #### Loot.ini filters
 
 ![Loot.ini filters](docs/screenshots/05-loot-ini-filters.png)
 
-- Read / write real `Loot.ini` (with `.bak` backup before save)
-- Add / update / remove rules (Keep, Ignore, Destroy, Sell, Quest)
-- Filter chips + search
-- **Export / import** filter templates as JSON
+Live `Loot.ini` path, Keep/Ignore/Destroy/Sell/Quest, JSON template import/export.
 
 #### Peer assignments
 
 ![Peer assignments](docs/screenshots/05-loot-peer-assignments.png)
 
-- Default peer for shared AdvLoot
-- Per-item peer routes (`loot-peers.json`)
-- **Auto-assign policies** by role + regex item patterns
-- **Smart suggestions** from box roles + pattern policies
-- Peers = connected boxes on your session
-
----
+Default shared peer, regex auto-assign by role, per-item routes.
 
 ### 6. Nav — binds, camps, MQ2Nav
 
 ![Nav tab](docs/screenshots/06-nav.png)
 
-- Zone, bind, gate status, live position
-- Bind rows with indexed **Gate** / **Succor**
-- Camp save / load / delete
-- MQ2Nav status badges (Idle / Navigating / Paused)
-- **Path / ETA** (PathLength when available) and **failure reasons** when nav can’t run (no plugin, no mesh, path blocked, no path to target)
-- **PathExists** reachable sample rings on the Spawns minimap (bridge **v5**)
-- Path preview also draws on the Spawns minimap
-- Nav Target, Pause, Stop
-- **Nav to Loc** (X / Y → `/nav loc`)
+Zone/bind/gate/position, Gate/Succor/Set Bind, Nav Target/Pause/Stop, Nav to Loc, camps.
 
----
-
-### 7. Boxes — multi-box crew panel
+### 7. Boxes — multi-box crew
 
 ![Boxes tab](docs/screenshots/07-boxes.png)
 
-- Card per connected client: vitals, zone, target, bridge health
-- **Roles** per toon (main, puller, looter, healer, …) saved to `boxes.json`
-- Crew summary + sort order
-- Per-box Follow / Invite / Pause
-- **One-click reconnect** + visible backoff when degraded
-- **Summary density** mode for large crews (expand on demand)
-- **Crew perf threshold** — above N boxes, non-critical polls throttle; at **12+** companion also **staggers** bridge requests and the UI **paginates** the Boxes grid
-- Broadcast command to all / role / except-main
-- **Broadcast presets** (Camp All, EQBC / DanNet follow+invite, Pause Macros) + save new presets
-- Loot routing **policies** by role + regex patterns
-- **Except main** queue — send to all boxes except the main role
-
----
+Per-box vitals + role, Follow/Invite/Pause/Reconnect, loot peer policies, broadcast presets + except-main.
 
 ### 8. Hotbuttons — one-click commands
 
 ![Hotbuttons tab](docs/screenshots/08-hotbuttons.png)
 
-- Configurable command buttons (multi-step with delays supported)
-- Click = run on selected character
-- Edit mode: add / delete / click-to-edit
-- **Drag-to-reorder**
-- **Categories** with filter chips
-- **Per-character hotbutton sets** (Global or named toon)
-- **Import / export JSON** + copy set across characters
-- Can be triggered from **automation rules** by label
+Global/per-character sets, edit/import/export/copy, multi-step commands.
 
----
-
-### 9. Plugins — load / unload + INI deep-link + deps
+### 9. Plugins — load / unload + INI
 
 ![Plugins tab](docs/screenshots/09-plugins.png)
 
-- Loaded vs available plugins with search
-- Toggle load / unload (warns when macros depend on a plugin)
-- Macro dependency hints (“used by N macro(s)”)
-- **INI** button opens the matching config file in the INI editor
-- Full **dependency graph** also available under Settings (plugin → macros → hotbuttons)
-
----
+Loaded vs available, dependency hints, INI deep-link (includes `MQ2OverlayBridge2`).
 
 ### 10. Macros — browse, pin, run, edit
 
 ![Macros tab](docs/screenshots/10-macros.png)
 
-- Full `.mac` library with search
-- Run / Stop / Pause
-- Pin favorites + recent macros
-- Missing plugin dependency hints
-- **Inline macro editor** — syntax highlight, edit, save with backup / conflict check + line-count confirm
-
----
+Library search, Run/Edit, missing-plugin dependency notes, inline editor.
 
 ### 11. Lua — scripts + editor
 
 ![Lua tab](docs/screenshots/11-lua.png)
 
-- Lists scripts from your MQ `lua` folder
-- Per-script run / stop toggles + **Stop All**
-- Folder grouping + search
-- **Inline Lua editor** — syntax highlight, edit, save, recent files
-
----
+Folder-grouped script library, toggles, Stop All, Edit.
 
 ### 12. INI — config browser + editor
 
 ![INI editor](docs/screenshots/12-ini-editor.png)
 
-- Browses MQ `Config` with grouped categories
-- Syntax-highlighted editor with line gutter
-- Save with **mtime conflict detection** (409 if file changed on disk)
-- Automatic `.bak` before overwrite
-- Unsaved-change indicator
+Grouped Config tree (KissAssist, MuleAssist, plugins…), safe save with backups.
 
----
-
-### 13. Settings — appearance, loot, session, remote, tips
+### 13. Settings — appearance, session, remote, updates
 
 ![Settings tab](docs/screenshots/13-settings.png)
 
-- Theme / accent / font scale / overlay opacity
-- **Ghost panel** + **Ghost feed** opacity (per-element transparency)
-- OBS / screen-capture exclude
-- Optional **performance HUD** (+ **per-box cost** breakdown)
-- **Crew perf threshold** + Boxes density (cards / summary)
-- **Loot auto-greed copper threshold**
-- **Config bundle** export / import (versioned JSON of hotbuttons, loot peers, boxes, alerts, watchlist, settings)
-- **Session summary** — XP/hr, deaths, loot copper, disconnects
-- **LAN access**: enable, token copy / regenerate, read-only mode, IP allowlist
-- **Session tokens** (1h viewer/control) with **device label**, **active session list**, **revoke** / **revoke all**, remote **rate limits**
-- **Mobile view** at `/mobile.html` (token persisted locally)
-- **Dependency graph** (plugins ↔ macros)
-- Opt-in **local usage tips** (SQLite only — never phones home)
-- Links to public preview docs ([User Guide](docs/USER-GUIDE.md), [API](docs/API.md))
-- Install MQ **autoload** macro
-- **Setup Wizard** + ongoing misconfig coach (stale EZInventory, missing DLL, version mismatch)
+Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, updates, LAN + session tokens, tips, wizard.
 
 ---
 
-## Cross-cutting systems
+## Public docs
 
-| System | What it does |
-|--------|----------------|
-| **Bridge API v7** | v6 + FactionTable/FM standing + Detour `.navmesh` poly dump |
-| **Packaging / CI** | Release zip + `updates.json`; optional Authenticode; GitHub Actions publish on `overlay-v*` |
-| **Updater** | `/api/version` + Settings check against hosted `updates.json` |
-| **Per-box health** | `connected` / `degraded` / `no_bridge` with reconnect backoff + countdown UI |
-| **SQLite store** | Chat history, audit, spawn snapshots, loot history, usage tips, rule cooldowns |
-| **Audit log** | Loot / INI / broadcast / plugin / macro / reconnect / config / remote → Events feed |
-| **Inventory sync model** | Bridge = presence; EZInventory = stats when fresh; catalog = icons/names; **crew cache** for cross-box intel |
-| **Loot safety** | `Loot.ini` backups, peer routing, filter templates, auto-greed audit, raid rotation/council |
-| **Rules engine** | Composable conditions → actions with cooldown (extends alert engine) |
-| **Alert engine** | Server-evaluated HP / tell / spawn watch → `/api/alerts/events` + mute/snooze |
-| **Config portability** | Single versioned JSON bundle for sharing setups between machines / boxes |
-| **Remote access** | LAN master token + scoped session tokens + list/revoke UI + rate limits + mobile viewer |
-| **Crew perf mode** | Throttle + stagger non-critical polls; paginate Boxes above large crew sizes |
-| **Deploy scripts** | `deploy-overlay.ps1`, `restart-companion.ps1`, `install-overlay.ps1` |
+- [User Guide](docs/USER-GUIDE.md)
+- [API](docs/API.md)
+- [Packaging](docs/PACKAGING.md)
 
 ---
 
 ## Still coming / not public yet
 
-Honest remaining work before any public beta:
+- [ ] Production code-signing certificate in CI secrets (local sign path + pipeline exist)
+- [ ] Public beta / installers published to this repo
 
-- [ ] Code-signing certificate in CI secrets (pipeline + local sign path exist; production cert not checked in)
-- [ ] Fresh screenshots that show Round 2 + July 11 UI (rules, council, revoke list, mesh tris, mobile, updater)
+**Recently shipped (checkbox history):**
 
-**Shipped from the previous “still coming” list:**
-
-- [x] FactionTable / FactionManagerClient standing without visible `/consider` (silent consider learns IDs; `faction_table` / `faction_manager` sources)
-- [x] Native Detour poly dump from MQ2Nav `.navmesh` (`mesh_mode:"detour_polys"`)
-- [x] Signed installer / updater scaffolding (zip + optional Authenticode + Settings update check)
-- [x] Full CI publishing pipeline (build → artifact → tagged GitHub Release)
-- [x] True faction standing via consider parse + auto-consider (`faction_source:"consider"`)
-- [x] Mesh triangle/edge wireframe from PathExists grid
-- [x] Hardened remote auth (device revocation UI, rate limits polish)
-- [x] PathExists mesh beyond decorative sample ring
-- [x] Standing / faction_source fields + class/item gates for who-can-use
-- [x] Deeper multi-pid inventory cache for cross-box “who can use”
-- [x] Further performance polish for very large (12+) box crews
-- [x] Public docs beyond this preview ([User Guide](docs/USER-GUIDE.md), [API](docs/API.md))
+- [x] Fresh screenshots (July 11 tab-order gallery above)
+- [x] FactionTable / FactionManager standing without visible `/consider`
+- [x] Native Detour poly dump from MQ2Nav `.navmesh`
+- [x] PathExists triangle wireframe fallback
+- [x] Signed installer / updater scaffolding + CI publish path
+- [x] Hardened remote auth (revoke UI, rate limits, mobile)
+- [x] Multi-pid inventory cache / who-can-use
+- [x] 12+ box crew performance polish
+- [x] Public User Guide + API docs
 
 **Expect bugs and breaking changes.** This preview shows direction, not a finished product.
 
@@ -410,22 +323,21 @@ Honest remaining work before any public beta:
 | Area | State |
 |------|--------|
 | Core bridge pipe + API **v7** | Working in dev |
-| Web dashboard UI (IA / Focus / Compact / Ghost) | Working |
-| Automation rules engine | Working (preview) |
-| Inventory + icons + sync badges | Working |
-| Loot (active / Loot.ini / peers / raid council / auto-greed) | Working |
-| Spawns + Detour/PathExists mesh + path preview | Working (v7 bridge) |
-| FactionTable / consider standing | Working (v7; `faction_table` preferred when known) |
-| Multi-box roles + broadcast + reconnect + crew perf (12+) | Working |
-| Macro / Lua editors (highlight + safe save) | Working |
-| Config bundle + session summary | Working |
-| Remote session tokens + revoke UI + rate limits + mobile | Working (preview) |
-| Multi-pid inventory cache / who-can-use | Working |
-| Installer package + updater check + CI publish | Working (preview) |
-| Public docs (user guide + API) | Working ([docs/](docs/)) |
-| Setup wizard + LAN + misconfig coach | Working |
+| Web dashboard (Focus / Compact / Ghost) | Working |
+| Automation rules + alerts | Working (preview) |
+| Inventory + icons + crew who-can-use | Working |
+| Loot (AdvLoot / Loot.ini / peers / council) | Working |
+| Spawns + Detour/PathExists mesh + path preview | Working |
+| FactionTable / consider standing | Working |
+| Multi-box roles + broadcast + 12+ perf | Working |
+| Macros / Lua / Plugins / Hotbuttons / INI | Working |
+| Config bundle + session summary + updater check | Working |
+| Remote tokens + revoke + mobile | Working (preview) |
+| Packaging + CI publish path | Working (preview) |
+| Public docs | Working |
+| Setup wizard + misconfig coach | Working |
 | Public release | Not started |
 
 ---
 
-*Last updated: July 11, 2026 (v7 FactionTable standing + Detour mesh → GitHub preview) — development preview for [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 11, 2026 — full capability list + fresh tab-order screenshots — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
