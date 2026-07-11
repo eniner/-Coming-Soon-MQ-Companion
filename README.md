@@ -15,10 +15,10 @@ Built for **multi-boxers** and **solo power users** who want:
 - Remote control of macros, plugins, Lua scripts, hotbuttons, and MQ commands
 - **Composable automation rules** (conditions → toast / sound / suggest / broadcast / command) with cooldowns
 - Inventory and loot with real item icons, stats, copper value, peer routing, **raid loot council / rotation**, and upgrade intel
-- Spawn radar with a pan/zoom zone minimap, watchlists, con/standing/faction labels, and **PathExists mesh rings + nav path preview** (bridge **v5**)
+- Spawn radar with a pan/zoom zone minimap, watchlists, con/standing/faction labels, and **PathExists triangle mesh + nav path preview** (bridge **v6**)
 - Multi-box roles, broadcast presets, crew health / reconnect, and **12+ box performance modes** (staggered polls, paginated Boxes)
 - Config portability (bundle export/import), session summary (XP/hr, deaths, loot copper), and SQLite history
-- A clean UI beside EQ — **Focus / Compact / Ghost** — plus optional **LAN + mobile viewer** with **session revoke UI** and rate limits (`/mobile.html`)
+- A clean UI beside EQ — **Focus / Compact / Ghost** — plus optional **LAN + mobile viewer** with **session revoke UI**, rate limits, and **update checks** (`/mobile.html`)
 
 It is **not** a public release product yet. This repo only documents the private build’s direction.
 
@@ -35,7 +35,7 @@ flowchart LR
 
 1. **Web dashboard** — local browser UI (`http://127.0.0.1:38111/`); optional **mobile** view at `/mobile.html`
 2. **Overlay Companion** — Windows app; hosts the UI, SQLite store (chat/audit/loot history/usage), icon atlas, rules engine, and HTTP APIs
-3. **MQ2OverlayBridge** — in-game MQ plugin that streams live data and runs commands (**API v5**)
+3. **MQ2OverlayBridge** — in-game MQ plugin that streams live data and runs commands (**API v6**)
 4. **Optional data sources** — EZInventory exports, UltDev item catalog, `Loot.ini`, MQ2Nav TLOs, etc.
 
 The companion auto-detects connected EQ clients. Switch boxes from the top bar; every tab follows the selected character. When LAN is enabled, a persistent banner shows remote access is on; short-lived **viewer/control session tokens** can be issued, listed, and revoked for phones or other devices.
@@ -54,7 +54,7 @@ The companion auto-detects connected EQ clients. Switch boxes from the top bar; 
 
 - Character mini-card with HP ring, zone, level, **role**, and **alert count**
 - Per-box character switcher with health dots (`connected` / `degraded` / `no_bridge`)
-- Bridge connection status + **API version awareness** (expects bridge **v5**)
+- Bridge connection status + **API version awareness** (expects bridge **v6**)
 - **Ctrl+K** command palette — tabs, macros, plugins, hotbuttons, watchlist, recent console lines, `/commands`
 - Notification center (bell) with history, **mute by category**, and **snooze**
 - **Focus** mode, collapsible / pin / icon **Sidebar**, **Compact** vitals bar, **Ghost** overlay (per-element opacity)
@@ -62,20 +62,29 @@ The companion auto-detects connected EQ clients. Switch boxes from the top bar; 
 
 ---
 
-## Today's updates (July 11, 2026 — still-coming pass)
-
-Shipped on top of Round 2:
+## Today's updates (July 11, 2026 — installer / CI / standing / mesh)
 
 | Area | Today |
 |------|--------|
-| **Hardened remote auth** | Device/session **list + revoke** UI; create viewer/control with device label; **revoke all**; remote IP **rate limits**; remote `/api/*` requires bearer when LAN auth is on |
-| **Nav mesh (bridge v5)** | Reachable **PathExists** rings (not a decorative circle) + path preview; **PathLength** ETA; `mesh_mode` / filtered `mesh_sample` on minimap |
-| **Faction / standing** | Spawn `standing` + `faction_source:"race_proxy"`; class on state/spawns; item `classes`/`races` bitmasks (true FactionManager offsets still pending) |
-| **Multi-pid inventory cache** | `GET /api/inventory/crew` — cross-box **who can use** by class + level; redundant badges use the crew cache |
-| **12+ crew polish** | Staggered bridge polls by crew size; UI poll backoff; **paginated** Boxes grid |
-| **Public docs** | User guide + HTTP API notes in [`docs/`](docs/) |
+| **Signed installer / updater** | `packaging/build-release.ps1` → zip + `updates.json` + optional **Authenticode** (`OV_SIGN_THUMBPRINT` / signtool); Settings **Check for updates** via `/api/version` + remote manifest |
+| **CI publishing pipeline** | `.github/workflows/overlay-companion.yml` — Win32 build, package artifacts, **GitHub Release** on `overlay-v*` tags |
+| **Faction standing** | Parse `/consider` chat → ALLY…SCOWLING cache; auto-consider target; `faction_source:"consider"` when known (FactionManager offsets still unmapped) |
+| **Mesh wireframe** | 9×9 PathExists grid → **`mesh_tris` / `mesh_edges`** on minimap (`mesh_mode: pathexists_tris`). Full Detour poly dump still needs MQ2Nav internals |
 
-**Bridge:** companion expects **API v5**. In-game: unload → deploy `MQ2OverlayBridge2.dll` → `/plugin MQ2OverlayBridge2`.
+**Bridge:** companion expects **API v6**. Reload: `/plugin MQ2OverlayBridge2`.
+
+---
+
+## Earlier today (still-coming pass → API v5)
+
+| Area | Shipped |
+|------|--------|
+| **Hardened remote auth** | Device/session list + revoke; rate limits; remote bearer for `/api/*` |
+| **Nav mesh (v5)** | PathExists rings + PathLength ETA |
+| **Faction fields** | `standing` / `faction_source` + class on state/items |
+| **Crew inventory cache** | `GET /api/inventory/crew` for who-can-use |
+| **12+ crew polish** | Staggered polls + paginated Boxes |
+| **Public docs** | [User Guide](docs/USER-GUIDE.md) + [API](docs/API.md) |
 
 ---
 
@@ -158,10 +167,10 @@ Screenshots from a live session (July 10, 2026). Gallery images predate the July
 ![Spawns tab](docs/screenshots/03-spawns.png)
 
 - Live spawn list: name, type, level, distance / bearing
-- **Con color** + **standing** / **faction** / **race** labels (`faction_source` notes race-proxy until FactionManager offsets exist)
+- **Con color** + **standing** (consider-chat when known) / **faction** / **race** (`faction_source`: `consider` | `race_proxy`)
 - Search + type filters (NPC / PC / Pet / Merc / Corpse)
 - **Zone minimap** — you at center; pan, zoom, follow-me, hover tooltips
-- **Nav path preview** + **PathExists reachable mesh rings** when bridge **v5** is loaded
+- **Nav path preview** + **PathExists triangle wireframe** (`mesh_tris` / `mesh_edges`) when bridge **v6** is loaded
 - Click a map dot or list row to **target**
 - **Watchlist** — toast / sound / both; optional **match faction/con**
 - Background spawn polling while other tabs are active (**throttled** when crew size ≥ perf threshold)
@@ -344,7 +353,9 @@ Screenshots from a live session (July 10, 2026). Gallery images predate the July
 
 | System | What it does |
 |--------|----------------|
-| **Bridge API v5** | v4 nav + PathExists mesh rings, standing/faction_source, class on state/items; version handshake |
+| **Bridge API v6** | v5 + PathExists tris/edges, consider-based standing, version handshake |
+| **Packaging / CI** | Release zip + `updates.json`; optional Authenticode; GitHub Actions publish on `overlay-v*` |
+| **Updater** | `/api/version` + Settings check against hosted `updates.json` |
 | **Per-box health** | `connected` / `degraded` / `no_bridge` with reconnect backoff + countdown UI |
 | **SQLite store** | Chat history, audit, spawn snapshots, loot history, usage tips, rule cooldowns |
 | **Audit log** | Loot / INI / broadcast / plugin / macro / reconnect / config / remote → Events feed |
@@ -363,16 +374,19 @@ Screenshots from a live session (July 10, 2026). Gallery images predate the July
 
 Honest remaining work before any public beta:
 
-- [ ] Signed installer / updater
-- [ ] Full CI publishing pipeline
-- [ ] True FactionManager standing (offsets still unmapped — today’s `standing` is level-con; `faction` stays race-keyed with `faction_source`)
-- [ ] Full Recast triangle mesh dump (needs MQ2Nav internals beyond TLOs — PathExists rings ship today)
-- [ ] Fresh screenshots that show Round 2 + July 11 UI (rules builder, council, remote revoke list, PathExists mesh, mobile)
+- [ ] Code-signing certificate in CI secrets (pipeline + local sign path exist; production cert not checked in)
+- [ ] FactionManagerClient offsets for standing without `/consider` (consider-chat standing ships today)
+- [ ] Native Detour/Recast poly dump via MQ2Nav internals (PathExists triangle wireframe ships today)
+- [ ] Fresh screenshots that show Round 2 + July 11 UI (rules, council, revoke list, mesh tris, mobile, updater)
 
-**Shipped from the previous “still coming” list (July 11):**
+**Shipped from the previous “still coming” list:**
 
+- [x] Signed installer / updater scaffolding (zip + optional Authenticode + Settings update check)
+- [x] Full CI publishing pipeline (build → artifact → tagged GitHub Release)
+- [x] True faction standing via consider parse + auto-consider (`faction_source:"consider"`)
+- [x] Mesh triangle/edge wireframe from PathExists grid
 - [x] Hardened remote auth (device revocation UI, rate limits polish)
-- [x] PathExists mesh rings + path preview (beyond decorative sample ring)
+- [x] PathExists mesh beyond decorative sample ring
 - [x] Standing / faction_source fields + class/item gates for who-can-use
 - [x] Deeper multi-pid inventory cache for cross-box “who can use”
 - [x] Further performance polish for very large (12+) box crews
@@ -395,21 +409,23 @@ Honest remaining work before any public beta:
 
 | Area | State |
 |------|--------|
-| Core bridge pipe + API **v5** | Working in dev |
+| Core bridge pipe + API **v6** | Working in dev |
 | Web dashboard UI (IA / Focus / Compact / Ghost) | Working |
 | Automation rules engine | Working (preview) |
 | Inventory + icons + sync badges | Working |
 | Loot (active / Loot.ini / peers / raid council / auto-greed) | Working |
-| Spawns + minimap + PathExists mesh + path preview | Working (v5 bridge) |
+| Spawns + PathExists triangle mesh + path preview | Working (v6 bridge) |
+| Consider-based faction standing | Working (preview) |
 | Multi-box roles + broadcast + reconnect + crew perf (12+) | Working |
 | Macro / Lua editors (highlight + safe save) | Working |
 | Config bundle + session summary | Working |
 | Remote session tokens + revoke UI + rate limits + mobile | Working (preview) |
 | Multi-pid inventory cache / who-can-use | Working |
+| Installer package + updater check + CI publish | Working (preview) |
 | Public docs (user guide + API) | Working ([docs/](docs/)) |
 | Setup wizard + LAN + misconfig coach | Working |
 | Public release | Not started |
 
 ---
 
-*Last updated: July 11, 2026 (still-coming features → GitHub preview) — development preview for [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 11, 2026 (installer/CI/standing/mesh → GitHub preview) — development preview for [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
