@@ -27,16 +27,23 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 | | |
 |--|--|
-| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.3 |
-| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.3-win32.zip` |
-| **Updater manifest** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.3/updates.json |
+| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.4 |
+| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.4-win32.zip` |
+| **Updater manifest** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.4/updates.json |
 | **Bridge API** | **v8** (EMU handshake required) |
 
 **Install (EMU + MacroQuest only):** expand the zip → run `scripts\install-overlay.ps1` → in your EMU client `/plugin MQ2OverlayBridge2` → open `http://127.0.0.1:38111/`.
 
 Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is embedded for tray/desktop.
 
+**Hide/show overlay:** `Ctrl+Shift+O` (global). **Not** `Ctrl+Z` — that is Undo and must never steal your browser.
+
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
+
+### What’s new in 0.7.0-beta.4
+- **Fix:** removed global `Ctrl+Z` overlay hotkey (it stole Undo and could hide/restyle your main Edge/Chrome window)
+- Overlay hide/show is now **`Ctrl+Shift+O`**
+- Dashboard launches in an isolated Edge/Chrome `--app` profile; only that process is ever restyled or hidden
 
 ### What’s new in 0.7.0-beta.3
 - **EMU hard gates** — compile-time refuse Live builds; plugin auto-unloads on non-EMU client date / Live-looking `eqgame` version
@@ -360,7 +367,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 **Recently shipped (checkbox history):**
 
 - [x] Production code-signing certificate in CI secrets (local sign path + pipeline exist)
-- [x] Public beta / installers published to this repo (`v0.7.0-beta.3`)
+- [x] Public beta / installers published to this repo (`v0.7.0-beta.4`)
 - [x] UI polish pass (accent, focus exit, scroll, branded icon)
 - [x] Fresh screenshots (July 11 EMU gallery above)
 - [x] FactionTable / FactionManager standing without visible `/consider` (EMU)
@@ -373,6 +380,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 - [x] Public User Guide + API docs
 - [x] Explicit **EverQuest emulator only** product positioning
 - [x] EMU hard gates: compile-time, plugin init, handshake, eqgame fingerprint (`v0.7.0-beta.3`)
+- [x] Overlay toggle hotkey fixed: `Ctrl+Shift+O` (no more global `Ctrl+Z`) (`v0.7.0-beta.4`)
 
 **Expect bugs and breaking changes.** This preview shows direction, not a finished product.
 
@@ -411,4 +419,4 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 
 ---
 
-*Last updated: July 11, 2026 — v0.7.0-beta.3 EMU hard gates (API v8) — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 11, 2026 — v0.7.0-beta.4 Ctrl+Shift+O overlay toggle fix — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
