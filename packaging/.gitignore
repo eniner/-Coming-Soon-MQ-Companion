@@ -1,0 +1,4 @@
+*.pfx
+*.pfx.b64
+*.pwd.txt
+*.cer

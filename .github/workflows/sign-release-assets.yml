@@ -1,0 +1,86 @@
+name: Sign release assets
+
+# Re-signs OverlayCompanion.exe + MQ2OverlayBridge2.dll inside a release zip
+# when OV_SIGN_PFX_* secrets are present. Trigger manually after uploading an unsigned zip,
+# or after rotating the production Authenticode certificate.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. v0.7.0-beta.1)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  resign:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Import code-signing certificate
+        shell: pwsh
+        env:
+          OV_SIGN_PFX_BASE64: ${{ secrets.OV_SIGN_PFX_BASE64 }}
+          OV_SIGN_PFX_PASSWORD: ${{ secrets.OV_SIGN_PFX_PASSWORD }}
+          OV_SIGN_THUMBPRINT: ${{ secrets.OV_SIGN_THUMBPRINT }}
+        run: |
+          if (-not $env:OV_SIGN_PFX_BASE64) {
+            throw "OV_SIGN_PFX_BASE64 secret is not set. Add the production Authenticode PFX first."
+          }
+          ./packaging/import-signing-cert.ps1
+          echo "OV_SIGN_THUMBPRINT=$env:OV_SIGN_THUMBPRINT" >> $env:GITHUB_ENV
+
+      - name: Download release zip, sign binaries, re-upload
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OV_SIGN_THUMBPRINT: ${{ env.OV_SIGN_THUMBPRINT }}
+        run: |
+          $tag = "${{ inputs.tag }}"
+          $work = Join-Path $env:RUNNER_TEMP "ov-resign"
+          New-Item -ItemType Directory -Force -Path $work | Out-Null
+          Set-Location $work
+          gh release download $tag -R "${{ github.repository }}" -p "MQ-Overlay-Companion-*-win32.zip"
+          $zip = Get-ChildItem MQ-Overlay-Companion-*-win32.zip | Select-Object -First 1
+          if (-not $zip) { throw "No zip asset on $tag" }
+          Expand-Archive $zip.FullName -DestinationPath (Join-Path $work "stage") -Force
+          $signtool = (Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin" -Recurse -Filter signtool.exe |
+            Where-Object { $_.FullName -match '\\x64\\signtool\.exe$' } |
+            Sort-Object FullName -Descending | Select-Object -First 1).FullName
+          if (-not $signtool) { throw "signtool.exe missing on runner" }
+          $targets = @(
+            (Join-Path $work "stage\OverlayCompanion.exe"),
+            (Join-Path $work "stage\plugins\MQ2OverlayBridge2.dll")
+          )
+          foreach ($t in $targets) {
+            if (-not (Test-Path $t)) { throw "Missing $t in zip" }
+            $p = Start-Process -FilePath $signtool -ArgumentList @(
+              "sign","/sha1",$env:OV_SIGN_THUMBPRINT,"/fd","SHA256",
+              "/tr","http://timestamp.digicert.com","/td","SHA256",$t
+            ) -Wait -PassThru -NoNewWindow
+            if ($p.ExitCode -ne 0) { throw "signtool failed for $t" }
+          }
+          $outZip = Join-Path $work $zip.Name
+          if (Test-Path $outZip) { Remove-Item $outZip -Force }
+          Compress-Archive -Path (Join-Path $work "stage\*") -DestinationPath $outZip -Force
+          $hash = (Get-FileHash $outZip -Algorithm SHA256).Hash.ToLowerInvariant()
+          $ver = $tag.TrimStart("v")
+          $manifest = @{
+            version = $ver
+            bridge_api = 7
+            channel = "beta"
+            published_at = (Get-Date -Format o)
+            artifact = $zip.Name
+            sha256 = $hash
+            signed = $true
+            notes = "Re-signed release asset via Coming Soon CI secrets."
+            download_url = "https://github.com/${{ github.repository }}/releases/download/$tag/$($zip.Name)"
+          } | ConvertTo-Json -Depth 5
+          $manifestPath = Join-Path $work "updates.json"
+          $manifest | Set-Content -Encoding utf8 $manifestPath
+          gh release upload $tag $outZip $manifestPath -R "${{ github.repository }}" --clobber
+          Write-Host "Re-signed and uploaded $tag sha256=$hash"

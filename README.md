@@ -1,7 +1,21 @@
 # MQ Overlay Companion — Coming Soon
 
-> **Work in progress — not a public release.**  
-> This repository is a **preview only**. Screenshots and feature descriptions reflect the current private build (**bridge API v7**, July 11 2026). **No source code, binaries, or install packages are published here.**
+> **Public beta available.**  
+> Screenshots and docs reflect the current build (**bridge API v7**). Download the win32 zip from [Releases](https://github.com/eniner/-Coming-Soon-MQ-Companion/releases) — source remains private.
+
+---
+
+## Download (public beta)
+
+| | |
+|--|--|
+| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.1 |
+| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.1-win32.zip` |
+| **Updater manifest** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.1/updates.json |
+
+**Install:** expand the zip → run `scripts\install-overlay.ps1` → in EQ `/plugin MQ2OverlayBridge2` → open `http://127.0.0.1:38111/`.
+
+See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL.
 
 ---
 
@@ -290,11 +304,13 @@ Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, upd
 
 ## Still coming / not public yet
 
-- [ ] Production code-signing certificate in CI secrets (local sign path + pipeline exist)
-- [ ] Public beta / installers published to this repo
+- [ ] Commercial Authenticode cert (DigiCert/Sectigo) replacing interim CI PFX for SmartScreen reputation
+- [ ] MSI / Inno Setup wizard (zip + `install-overlay.ps1` ships today)
 
 **Recently shipped (checkbox history):**
 
+- [x] Production code-signing certificate in CI secrets (local sign path + pipeline exist)
+- [x] Public beta / installers published to this repo (`v0.7.0-beta.1`)
 - [x] Fresh screenshots (July 11 tab-order gallery above)
 - [x] FactionTable / FactionManager standing without visible `/consider`
 - [x] Native Detour poly dump from MQ2Nav `.navmesh`
