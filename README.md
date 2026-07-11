@@ -1,9 +1,9 @@
-﻿# MQ Overlay Companion ΓÇö Coming Soon
+# MQ Overlay Companion — Coming Soon
 
 > **Built for EverQuest emulator only.**  
 > Not for Daybreak Live. Not tested on Live. Not supported on Live.  
 > Targets **MacroQuest + RoF2-era EQ emulator clients** (private build; public beta zip).  
-> Screenshots and docs reflect **bridge API v8** with **EMU hard gates**. Download from [Releases](https://github.com/eniner/-Coming-Soon-MQ-Companion/releases) ΓÇö source remains private.
+> Screenshots and docs reflect **bridge API v8** with **EMU hard gates**. Download from [Releases](https://github.com/eniner/-Coming-Soon-MQ-Companion/releases) — source remains private.
 
 ---
 
@@ -15,7 +15,7 @@
 |--|--|
 | **Supported** | EverQuest **emulator** clients (RoF2-era EMU) with MacroQuest **Emu** |
 | **Not supported** | Daybreak **Live** EverQuest, Test, or any Live client build |
-| **Enforced by** | Compile-time ┬╖ plugin init ┬╖ pipe handshake ┬╖ `eqgame.exe` fingerprint ([details](docs/EMU-GATES.md)) |
+| **Enforced by** | Compile-time · plugin init · pipe handshake · `eqgame.exe` fingerprint ([details](docs/EMU-GATES.md)) |
 
 If you are on Live: **do not install this.** It will not load or connect.
 
@@ -36,13 +36,13 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is embedded for tray/desktop.
 
-**Hide/show overlay:** `Ctrl+Z` ù toggles the **in-game overlay window only** (never your normal browser).
+**Hide/show overlay:** `Ctrl+Z` � toggles the **in-game overlay window only** (never your normal browser).
 
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
 
 ### What's new in 0.7.0-beta.5
 - **Fix:** restore **Ctrl+Z** overlay hide/show and borderless-in-EQ overlay styling
-- Ctrl+Z only affects the dedicated overlay `--app` process tree ù not your everyday Edge/Chrome
+- Ctrl+Z only affects the dedicated overlay `--app` process tree � not your everyday Edge/Chrome
 - Process-tree window find so overlay chrome is applied again (not a plain browser window)
 
 ### What's new in 0.7.0-beta.4
@@ -52,14 +52,14 @@ See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater U
 - Accent-driven primary buttons; labeled compact vitals; endurance color distinct from HP
 - Spawns map legend + facing wedge; side-by-side map/list layout
 - Focus mode: Exit Focus button, Esc / Ctrl+Shift+F always works
-- Main content scrolls on Windows; larger default window (1280├ù900); branded icon
-- Stale EZInventory badge copies `/lua run ezinventory`; plugin/Lua bulk actions; Ctrl+1ΓÇô9 box hotkeys
+- Main content scrolls on Windows; larger default window (1280×900); branded icon
+- Stale EZInventory badge copies `/lua run ezinventory`; plugin/Lua bulk actions; Ctrl+1–9 box hotkeys
 
 ---
 
 ## What is it?
 
-**MQ Overlay Companion** is a Windows desktop + local browser dashboard for [MacroQuest](https://www.macroquest.org/) on **EverQuest emulator** that gives you one modern control surface for EMU boxes ΓÇö vitals, automation, loot, nav, plugins, macros, Lua, and config ΓÇö without juggling a dozen in-game windows and `.ini` files.
+**MQ Overlay Companion** is a Windows desktop + local browser dashboard for [MacroQuest](https://www.macroquest.org/) on **EverQuest emulator** that gives you one modern control surface for EMU boxes — vitals, automation, loot, nav, plugins, macros, Lua, and config — without juggling a dozen in-game windows and `.ini` files.
 
 Built for **EMU multi-boxers** and **solo power users** on private / public EQ emulator servers.
 
@@ -74,10 +74,10 @@ flowchart LR
   C --> D[EQ Emulator + MacroQuest]
 ```
 
-1. **Web dashboard** ΓÇö `http://127.0.0.1:38111/` (+ optional `/mobile.html`)
-2. **Overlay Companion** ΓÇö hosts UI, SQLite store, icon atlas, rules/alerts, HTTP APIs
-3. **MQ2OverlayBridge** ΓÇö in-game MQ plugin for **EMU** (deployed as `MQ2OverlayBridge2.dll`, **API v8**)
-4. **Optional data** ΓÇö EZInventory exports, UltDev item catalog, `Loot.ini`, MQ2Nav / `.navmesh`
+1. **Web dashboard** — `http://127.0.0.1:38111/` (+ optional `/mobile.html`)
+2. **Overlay Companion** — hosts UI, SQLite store, icon atlas, rules/alerts, HTTP APIs
+3. **MQ2OverlayBridge** — in-game MQ plugin for **EMU** (deployed as `MQ2OverlayBridge2.dll`, **API v8**)
+4. **Optional data** — EZInventory exports, UltDev item catalog, `Loot.ini`, MQ2Nav / `.navmesh`
 
 The companion auto-detects connected **EQ emulator** clients. Switch boxes from the top bar; every tab follows the selected character.
 
@@ -97,7 +97,7 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 - Send arbitrary **MQ `/commands`** to the selected box
 - Per-character **alert profiles** (low HP, tells, spawn watch, sound)
 - Server-side alerts that toast even when you are on another tab
-- **Automation rules** on Status: AND conditions ΓåÆ toast / sound / suggest button / broadcast preset / command (per-rule cooldown)
+- **Automation rules** on Status: AND conditions → toast / sound / suggest button / broadcast preset / command (per-rule cooldown)
 
 ### Console & history
 - Live stream of game / MQ / macro / Lua chat over the bridge pipe
@@ -114,29 +114,29 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 - `faction_source`: `faction_table` | `faction_manager` | `consider` | `race_proxy`
 - Faction standing without visible `/consider` when FactionTable is available on EMU
 - Search + type filters (NPC / PC / Pet / Merc / Corpse)
-- **Zone minimap** ΓÇö pan, zoom, follow-me, hover tooltips, **map legend**
+- **Zone minimap** — pan, zoom, follow-me, hover tooltips, **map legend**
 - Side-by-side map + list layout
 - **Nav path preview** + mesh wireframe (`mesh_mode`: `detour_polys` or `pathexists_tris`)
 - Click map/list to **target**
-- **Watchlist** ΓÇö toast / sound / both; optional match faction/con
+- **Watchlist** — toast / sound / both; optional match faction/con
 - Background spawn polling (throttled at large crew sizes); chunked lists for perf
 
 ### Inventory & gear intel
 - Merges **live bridge inventory** + **EZInventory JSON** + **UltDev catalog**
 - Native **item icons** from the EQ client atlas
-- Stat lines (AC, HP, mana, attributes, resists, heroic, ΓÇª)
+- Stat lines (AC, HP, mana, attributes, resists, heroic, …)
 - Filters: All / Worn / Bags / Bank / Has stats + search
 - Sync badges (`EZ` / `CAT`) and **stale export** warnings (click-to-copy `/lua run ezinventory`)
 - Class / race / level gates for **who can use**
-- Feeds loot-row intel: **upgrade ╬ö**, **redundant** badge
+- Feeds loot-row intel: **upgrade Δ**, **redundant** badge
 
-### Loot ΓÇö AdvLoot, corpse, filters, peers, raid council
+### Loot — AdvLoot, corpse, filters, peers, raid council
 - Personal + shared AdvLoot (need / greed / leave)
 - Corpse loot mirror + **Loot All**
 - Item icons + **copper value** when resolvable
 - `Loot.ini` rule badges + quick Keep / Ignore
-- Shared loot peer dropdown, Give ΓåÆ peer, Set all shared ΓåÆ peer
-- Optional **auto-greed under copper threshold** with audit ΓÇ£whyΓÇ¥
+- Shared loot peer dropdown, Give → peer, Set all shared → peer
+- Optional **auto-greed under copper threshold** with audit “why”
 - Who-can-use via **multi-pid crew inventory cache**
 - **Raid loot council** + rotation (none / round-robin / need-before-greed / DKP ledger) + history
 - Full **Loot.ini** editor with `.bak` backup, Keep/Ignore/Destroy/Sell/Quest
@@ -154,13 +154,13 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 
 ### Multi-box crew (Boxes)
 - Card per connected client: vitals, zone, target, bridge health
-- **Roles** per toon (main, puller, looter, healer, ΓÇª) in `boxes.json`
+- **Roles** per toon (main, puller, looter, healer, …) in `boxes.json`
 - Follow / Invite / Pause / **Reconnect** + backoff countdown
 - Summary density mode for large crews
-- **Crew perf threshold** ΓÇö throttle non-critical polls; at **12+** stagger pipe requests + paginate Boxes
+- **Crew perf threshold** — throttle non-critical polls; at **12+** stagger pipe requests + paginate Boxes
 - Broadcast to all / role / except-main
 - Broadcast presets (Camp All, EQBC / DanNet follow+invite, Pause Macros) + custom presets
-- **Ctrl+1ΓÇô9** box hotkeys
+- **Ctrl+1–9** box hotkeys
 - Loot routing policies by role + regex
 
 ### Hotbuttons
@@ -173,9 +173,9 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 ### Plugins
 - Loaded vs available with search (full MQ plugin library)
 - Toggle load / unload + **Unload all loaded** bulk action
-- Macro dependency hints (ΓÇ£used by N macrosΓÇ¥)
+- Macro dependency hints (“used by N macros”)
 - **INI** deep-link into the INI editor
-- Dependency graph also in Settings (plugin ΓåÆ macros ΓåÆ hotbuttons)
+- Dependency graph also in Settings (plugin → macros → hotbuttons)
 
 ### Macros
 - Full `.mac` library with search, pin, recent
@@ -189,7 +189,7 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 - Inline Lua editor: highlight, save, recent files
 
 ### INI config browser
-- Browses MQ `Config` with grouped categories (KissAssist, MuleAssist, plugins, ΓÇª)
+- Browses MQ `Config` with grouped categories (KissAssist, MuleAssist, plugins, …)
 - Syntax-highlighted editor + line gutter
 - Save with **mtime conflict detection** + automatic `.bak`
 - Unsaved-change indicator
@@ -202,12 +202,12 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 - Crew perf threshold + Boxes density
 - Loot auto-greed copper threshold
 - **Config bundle** export / import (versioned JSON)
-- **Session summary** ΓÇö XP/hr, deaths, loot copper, disconnects, zones
-- **Updates** ΓÇö `/api/version` + Settings check against `updates.json`
-- **LAN remote access** ΓÇö master token, allowlist, read-only mode
+- **Session summary** — XP/hr, deaths, loot copper, disconnects, zones
+- **Updates** — `/api/version` + Settings check against `updates.json`
+- **LAN remote access** — master token, allowlist, read-only mode
 - **Session tokens** (viewer/control, ~1h) with device label, list, revoke / revoke all, rate limits
 - **Mobile viewer** at `/mobile.html`
-- Opt-in local usage tips (SQLite only ΓÇö never phones home)
+- Opt-in local usage tips (SQLite only — never phones home)
 - Setup Wizard + misconfig coach (stale EZInventory, missing DLL, version mismatch)
 - Install MQ **autoload** macro
 - Packaging scripts + optional Authenticode; CI publish on `overlay-v*` tags
@@ -217,7 +217,7 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 |--------|------------|
 | **Bridge API v8** | Pipe + actor transport; EMU handshake; standing sources; Detour mesh dump; class/item gates |
 | **SQLite store** | Chat history, audit, spawn snapshots, loot history, usage tips, rule cooldowns |
-| **Audit log** | Loot / INI / broadcast / plugin / macro / reconnect / config / remote ΓåÆ Events |
+| **Audit log** | Loot / INI / broadcast / plugin / macro / reconnect / config / remote → Events |
 | **Inventory sync** | Bridge presence + EZ stats + catalog icons + crew cache |
 | **Alert + rules engines** | HP / tell / spawn watch + composable rules with cooldown |
 | **Deploy helpers** | `deploy-overlay.ps1`, `restart-companion.ps1`, `install-overlay.ps1` |
@@ -238,9 +238,9 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 
 ## Feature gallery (July 11, 2026)
 
-Fresh screenshots from a live **EverQuest emulator** session (Valiant / Guild Lobby, bridge connected) ΓÇö post UI polish pass.
+Fresh screenshots from a live **EverQuest emulator** session (Valiant / Guild Lobby, bridge connected) — post UI polish pass.
 
-### 1. Status ΓÇö command center
+### 1. Status — command center
 
 ![Status tab](docs/screenshots/01-status.png)
 
@@ -250,25 +250,25 @@ Vitals, identity cards, target/group, All Boxes overview.
 
 Buffs / gems, in-game HUD toggle, alert profiles, automation rules, send `/command`.
 
-### 2. Console ΓÇö live log + history
+### 2. Console — live log + history
 
 ![Console tab](docs/screenshots/02-console.png)
 
 Pipe-connected game/MQ/macro/Lua stream, SQLite search, export, send `/command`.
 
-### 3. Spawns ΓÇö radar + zone minimap
+### 3. Spawns — radar + zone minimap
 
 ![Spawns tab](docs/screenshots/03-spawns.png)
 
 Watchlist, follow-me map with legend, con/standing/faction labels, target-from-list/map.
 
-### 4. Inventory ΓÇö icons, stats, sync
+### 4. Inventory — icons, stats, sync
 
 ![Inventory tab](docs/screenshots/04-inventory.png)
 
 Bridge + EZInventory + UltDev catalog, worn/bags/bank filters, stale-export coach, item icons.
 
-### 5. Loot ΓÇö AdvLoot, filters, peers, council
+### 5. Loot — AdvLoot, filters, peers, council
 
 #### Active loot
 
@@ -288,49 +288,49 @@ Live `Loot.ini` path, Keep/Ignore/Destroy/Sell/Quest, JSON template import/expor
 
 Default shared peer, regex auto-assign by role, per-item routes.
 
-### 6. Nav ΓÇö binds, camps, MQ2Nav
+### 6. Nav — binds, camps, MQ2Nav
 
 ![Nav tab](docs/screenshots/06-nav.png)
 
 Zone/bind/gate/position, Gate/Succor/Set Bind, Nav Target/Pause/Stop, Nav to Loc, camps.
 
-### 7. Boxes ΓÇö multi-box crew
+### 7. Boxes — multi-box crew
 
 ![Boxes tab](docs/screenshots/07-boxes.png)
 
 Per-box vitals + role, Follow/Invite/Pause/Reconnect, loot peer policies, broadcast presets + except-main.
 
-### 8. Hotbuttons ΓÇö one-click commands
+### 8. Hotbuttons — one-click commands
 
 ![Hotbuttons tab](docs/screenshots/08-hotbuttons.png)
 
 Global/per-character sets, edit/import/export/copy, multi-step commands.
 
-### 9. Plugins ΓÇö load / unload + INI
+### 9. Plugins — load / unload + INI
 
 ![Plugins tab](docs/screenshots/09-plugins.png)
 
 Loaded vs available, dependency hints, Unload all, INI deep-link (includes `MQ2OverlayBridge2`).
 
-### 10. Macros ΓÇö browse, pin, run, edit
+### 10. Macros — browse, pin, run, edit
 
 ![Macros tab](docs/screenshots/10-macros.png)
 
 Library search, Run/Edit, missing-plugin dependency notes, inline editor.
 
-### 11. Lua ΓÇö scripts + editor
+### 11. Lua — scripts + editor
 
 ![Lua tab](docs/screenshots/11-lua.png)
 
 Folder-grouped script library, toggles, Stop All, Edit.
 
-### 12. INI ΓÇö config browser + editor
+### 12. INI — config browser + editor
 
 ![INI editor](docs/screenshots/12-ini-editor.png)
 
-Grouped Config tree (KissAssist, MuleAssist, pluginsΓÇª), safe save with backups.
+Grouped Config tree (KissAssist, MuleAssist, plugins…), safe save with backups.
 
-### 13. Settings ΓÇö appearance, remote, wizard
+### 13. Settings — appearance, remote, wizard
 
 ![Settings appearance](docs/screenshots/13-settings.png)
 
@@ -348,8 +348,8 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 
 ## Public docs
 
-- [User Guide](docs/USER-GUIDE.md) ΓÇö install & tabs (**EMU only**)
-- [EMU hard gates](docs/EMU-GATES.md) ΓÇö how Live is blocked (compile / init / handshake / fingerprint)
+- [User Guide](docs/USER-GUIDE.md) — install & tabs (**EMU only**)
+- [EMU hard gates](docs/EMU-GATES.md) — how Live is blocked (compile / init / handshake / fingerprint)
 - [API](docs/API.md)
 - [Packaging](docs/PACKAGING.md)
 
@@ -386,8 +386,8 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 
 - **This repo:** screenshots + descriptions + public docs only  
 - **Not included:** source code, MQ plugin binaries, EQ client assets, or personal configs  
-- Built against private MacroQuest / OpenVanilla fork work for **EQ emulator** ΓÇö **not open-sourced here**
-- Usage tips / personalization stay **local SQLite only** ΓÇö nothing is phoned home
+- Built against private MacroQuest / OpenVanilla fork work for **EQ emulator** — **not open-sourced here**
+- Usage tips / personalization stay **local SQLite only** — nothing is phoned home
 
 ---
 
@@ -415,4 +415,4 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 
 ---
 
-*Last updated: July 11, 2026 ΓÇö v0.7.0-beta.5 Ctrl+Shift+O overlay toggle fix ΓÇö [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 11, 2026 — v0.7.0-beta.5 Ctrl+Shift+O overlay toggle fix — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
