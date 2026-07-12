@@ -1,12 +1,12 @@
-﻿{
-    "version":  "0.7.0-beta.7",
-    "bridge_api":  8,
-    "channel":  "beta",
-    "published_at":  "2026-07-12T11:26:08.3109922-04:00",
-    "artifact":  "MQ-Overlay-Companion-0.7.0-beta.7-win32.zip",
-    "sha256":  "fafe61e2cc67a50ad83cc99c5fe420bb95e7a4aedef3f158c17816aec74e3914",
-    "signed":  false,
-    "emu_only":  true,
-    "notes":  "In-app live updater: Settings → Updates checks GitHub tip updates.json and can Download \u0026 install.",
-    "download_url":  "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.7/MQ-Overlay-Companion-0.7.0-beta.7-win32.zip"
+{
+  "version": "0.7.0-beta.7",
+  "bridge_api": 8,
+  "channel": "beta",
+  "published_at": "2026-07-12T15:26:00Z",
+  "artifact": "MQ-Overlay-Companion-0.7.0-beta.7-win32.zip",
+  "sha256": "fafe61e2cc67a50ad83cc99c5fe420bb95e7a4aedef3f158c17816aec74e3914",
+  "signed": false,
+  "emu_only": true,
+  "notes": "In-app live updater: Settings > Updates checks GitHub tip updates.json and can Download & install.",
+  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.7/MQ-Overlay-Companion-0.7.0-beta.7-win32.zip"
 }
