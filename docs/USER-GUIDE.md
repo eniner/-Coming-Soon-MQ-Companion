@@ -42,8 +42,8 @@ Blocked sessions report `health:"emu_blocked"` and do not accept commands. See a
 | Status | Vitals, target, group, casting, alerts, automation rules |
 | Console | Live game/MQ/macro/Lua log, SQLite search, export, send commands |
 | Spawns | Nearby list + minimap legend; nav path / mesh overlay; watchlist |
-| Inventory | Worn/bags/bank; icons; EZInventory + catalog sync; stale-export coach |
-| Loot | AdvLoot + Loot.ini peers + raid council / rotation |
+| Inventory | Worn/bags/bank + live character sheet from the bridge (icons + item stats; no EZInventory required) |
+| Loot | AdvLoot + corpse LootWnd; row Keep/Ignore/Destroy/Sell → Loot.ini; peers + raid council |
 | Nav | Zone binds, gate/succor, MQ2Nav status / ETA / camps |
 | Boxes | Crew overview, roles, broadcast, reconnect, Ctrl+1–9 |
 | Hotbuttons | Global/per-character command sets |

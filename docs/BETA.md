@@ -41,3 +41,9 @@ Older release tags/zips are deleted so the public cannot install stale builds. S
 ## Feedback
 
 Report issues on the Coming Soon repo. Do **not** use on Daybreak Live.
+
+## Recent docs refresh (July 12, 2026)
+
+- Screenshot gallery refreshed from a live EMU session
+- Documented **native bridge inventory** (character sheet + item icons/stats)
+- Documented corpse **Keep / Ignore / Destroy / Sell** quick filters on Active Loot rows
