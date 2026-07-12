@@ -8,13 +8,13 @@ This public repo hosts **beta installers** as GitHub Releases.
 
 Latest prerelease: https://github.com/eniner/-Coming-Soon-MQ-Companion/releases
 
-Updater manifest URL (Settings → Updates):
+Updater tip URL (Settings → Updates, auto-filled):
 
 ```
-https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/latest/download/updates.json
+https://cdn.jsdelivr.net/gh/eniner/-Coming-Soon-MQ-Companion@main/updates.json
 ```
 
-(For a specific beta tag, use `/download/v0.7.0-beta.2/updates.json`.)
+Public beta policy: [BETA.md](BETA.md). Fully live will verify Authenticode on apply; beta may ship unsigned zips.
 
 ## CI secrets (code signing)
 

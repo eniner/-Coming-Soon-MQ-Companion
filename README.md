@@ -23,22 +23,34 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 ---
 
-## Download (public beta)
+## Download (public beta — testing only)
 
 | | |
 |--|--|
-| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.6 |
-| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.6-win32.zip` |
-| **Updater manifest** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.6/updates.json |
+| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases |
+| **Beta policy** | [docs/BETA.md](docs/BETA.md) — what is temporary vs what stays for fully live |
+| **Updater tip** | `https://cdn.jsdelivr.net/gh/eniner/-Coming-Soon-MQ-Companion@main/updates.json` |
 | **Bridge API** | **v8** (EMU handshake required) |
 
-**Install (EMU + MacroQuest only):** expand the zip → run `scripts\install-overlay.ps1` → in your EMU client `/plugin MQ2OverlayBridge2` → open `http://127.0.0.1:38111/`.
+**This is a public beta for EMU testing.** Builds may be unsigned; LAN stays off until you enable it (strong token required). Fully live will add Authenticode verification on update apply and keep the same EMU-only gates.
+
+**Install (EMU + MacroQuest only):** expand the zip →  
+`.\scripts\install-overlay.ps1 -MqPath 'D:\YourMacroQuest'` →  
+in your EMU client `/plugin MQ2OverlayBridge2` → open `http://127.0.0.1:38111/`.
 
 Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is embedded for tray/desktop.
 
 **Hide/show overlay:** `Ctrl+Z` — toggles the **in-game overlay window only** (never your normal browser).
 
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
+
+### What's new in 0.7.0-beta.8
+- **Security (beta):** updater scoped to this GitHub repo; strong LAN tokens; refuse LAN bind without token; strip author machine paths from install scripts
+- Live updater: Settings → Updates checks tip + Download & install (SHA-256)
+- Docs: [BETA.md](docs/BETA.md) — testing-only vs fully live
+
+### What's new in 0.7.0-beta.7
+- In-app live updater wired to public tip `updates.json`
 
 ### What's new in 0.7.0-beta.6
 - **Fix:** restore **Ctrl+Z** overlay hide/show and borderless-in-EQ overlay styling
@@ -52,7 +64,7 @@ See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater U
 - Accent-driven primary buttons; labeled compact vitals; endurance color distinct from HP
 - Spawns map legend + facing wedge; side-by-side map/list layout
 - Focus mode: Exit Focus button, Esc / Ctrl+Shift+F always works
-- Main content scrolls on Windows; larger default window (1280Ã—900); branded icon
+- Main content scrolls on Windows; larger default window (1280×900); branded icon
 - Stale EZInventory badge copies `/lua run ezinventory`; plugin/Lua bulk actions; Ctrl+1–9 box hotkeys
 
 ---
