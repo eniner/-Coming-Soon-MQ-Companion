@@ -1,0 +1,12 @@
+{
+  "version": "0.7.0-beta.6",
+  "bridge_api": 8,
+  "channel": "beta",
+  "published_at": "2026-07-11T11:53:44.3212902-04:00",
+  "artifact": "MQ-Overlay-Companion-0.7.0-beta.6-win32.zip",
+  "sha256": "8d97ba50b19caa509cf6eac0bc24ad09e99c1f197ab8be2e4b9874b79b511adb",
+  "signed": true,
+  "emu_only": true,
+  "notes": "Restore original Edge --app overlay (borderless over EQ). Ctrl+Z only toggles the new overlay HWND. No user-data-dir browser profile.",
+  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.6/MQ-Overlay-Companion-0.7.0-beta.6-win32.zip"
+}
