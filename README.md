@@ -27,10 +27,13 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 | | |
 |--|--|
-| **Latest prerelease** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases |
-| **Beta policy** | [docs/BETA.md](docs/BETA.md) — what is temporary vs what stays for fully live |
-| **Updater tip** | `https://cdn.jsdelivr.net/gh/eniner/-Coming-Soon-MQ-Companion@main/updates.json` |
+| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.9 |
+| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.9-win32.zip` |
+| **Beta policy** | [docs/BETA.md](docs/BETA.md) — testing-only vs fully live |
+| **Updater tip** | `https://cdn.jsdelivr.net/gh/eniner/-Coming-Soon-MQ-Companion@main/updates.json` (always points at the current tip) |
 | **Bridge API** | **v8** (EMU handshake required) |
+
+Older beta zips were **removed** from public Releases so testers only get the current EMU build. Use **Settings → Updates → Download & install** (or the tip link above) to stay current.
 
 **This is a public beta for EMU testing.** Builds may be unsigned; LAN stays off until you enable it (strong token required). Fully live will add Authenticode verification on update apply and keep the same EMU-only gates.
 
@@ -43,6 +46,10 @@ Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is
 **Hide/show overlay:** `Ctrl+Z` — toggles the **in-game overlay window only** (never your normal browser).
 
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
+
+### What's new in 0.7.0-beta.9
+- **Hotfix:** restore LAN for installs that still had a legacy short token (auto-upgrade + bind)
+- Older public beta releases removed — download only the current tip
 
 ### What's new in 0.7.0-beta.8
 - **Security (beta):** updater scoped to this GitHub repo; strong LAN tokens; refuse LAN bind without token; strip author machine paths from install scripts

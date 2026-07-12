@@ -31,10 +31,12 @@ Still beta limitations (will change for fully live):
 
 ## Install (testers)
 
-1. Download the latest **prerelease** zip from [Releases](https://github.com/eniner/-Coming-Soon-MQ-Companion/releases)
+1. Download **only** the current prerelease from [Releases](https://github.com/eniner/-Coming-Soon-MQ-Companion/releases) (older betas are removed from public download)
 2. Expand → `.\scripts\install-overlay.ps1 -MqPath 'D:\YourMacroQuest'`
 3. In EMU: `/plugin MQ2OverlayBridge2`
 4. Dashboard: `http://127.0.0.1:38111/` → Settings → Updates uses the public tip automatically
+
+Older release tags/zips are deleted so the public cannot install stale builds. Stay current via **Download & install** or a fresh Releases download.
 
 ## Feedback
 
