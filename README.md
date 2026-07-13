@@ -88,6 +88,11 @@ See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater U
 - Main content scrolls on Windows; larger default window (1280×900); branded icon
 - Plugin/Lua bulk actions; Ctrl+1–9 box hotkeys
 
+### Docs / gallery refresh (July 13, 2026)
+- Status screenshots updated for **Kiss / Mule live control** and **Combat / raid HUD**
+- New **Playbooks** gallery shot (Normal / EQBC / DanNet / Kiss board)
+- Capability list + UI map include Playbooks and assist/combat features
+
 ### Docs / gallery refresh (July 12, 2026 — evening)
 - Status / rules / Hotbuttons screenshots updated for **spell icons**, **gem grid**, and **Import BM**
 - Full tab gallery kept in sidebar order (Status → Settings)
@@ -128,8 +133,10 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 - Live **HP / mana / endurance / XP** bars with color ramps and labeled compact vitals
 - Character, level, zone, **XYZ**, role badge, alert count, top-bar **HP ring** (once)
 - **Target** + **group** panels (Assist / Follow / Invite helpers)
+- **Combat / raid HUD** on Status: ToT, mez/charm flags, aggro holder + %, short buffs/songs, burn window
+- **Kiss / Mule live control** on Status + Boxes: pause / resume / chase / melee / camp / burn, role Apply, crew pause/resume, live assist pills when KissAssist/MuleAssist is running
 - **All Boxes** overview cards from any Status view
-- Buffs / songs + casting / gem status
+- Buffs / songs + casting / gem status (spell icons when available)
 - In-game HUD toggle from the dashboard
 - Send arbitrary **MQ `/commands`** to the selected box
 - Per-character **alert profiles** (low HP, tells, spawn watch, sound)
@@ -190,9 +197,9 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 - Spawns minimap: path preview + **Detour `.navmesh` poly dump** (fallback PathExists grid tris)
 
 ### Multi-box crew (Boxes)
-- Card per connected client: vitals, zone, target, bridge health
+- Card per connected client: vitals, zone, target, bridge health, **Kiss/Mule assist badges**
 - **Roles** per toon (main, puller, looter, healer, …) in `boxes.json`
-- Follow / Invite / Pause / **Reconnect** + backoff countdown
+- Follow / Invite / **Kiss Pause·Resume·Chase·Burn·Camp** / Reconnect + backoff countdown
 - Summary density mode for large crews
 - **Crew perf threshold** — throttle non-critical polls; at **12+** stagger pipe requests + paginate Boxes
 - Broadcast to all / role / except-main
@@ -206,7 +213,16 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 - **Drag-to-reorder**, categories, per-character or Global sets
 - Import / export JSON + copy set across characters
 - **Import BM** — paste ButtonMaster share codes (base64) into hotbuttons
+- Seeded **Kiss** category (pause/chase/burn/camp/…) when empty
 - Triggerable from automation rules by label
+
+### Crew Playbooks
+- Sequenced multi-step crew actions stored in `playbooks.json`
+- Full-width board by channel: **Normal / EQBC / DanNet / Kiss**
+- Step types: command (selected / all / role), broadcast, broadcast preset, delay, hotbutton
+- Run / Stop with live run log; edit drawer (name, category, steps)
+- Starters: camp & pause, med break, EQBC assist/attack, DanNet follow, Kiss chase/burn
+- Command palette entries to open or run a playbook
 
 ### Plugins
 - Loaded vs available with search (full MQ plugin library)
@@ -267,22 +283,26 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 | Group | Tabs |
 |-------|------|
 | **Character** | Status, Console, Spawns, Inventory, Loot, Nav |
-| **Automation** | Boxes, Hotbuttons, Plugins, Macros, Lua |
+| **Automation** | Boxes, Hotbuttons, Playbooks, Plugins, Macros, Lua |
 | **Config** | INI, Settings |
 
 **Global chrome:** character mini-card + HP ring, box switcher with health dots, bridge + API version, Ctrl+K palette, notification center (mute / snooze), Focus / Sidebar / Compact / Ghost, remote-access banner when LAN is on, **EQ Emulator only** badge in the sidebar.
 
 ---
 
-## Feature gallery (July 12, 2026)
+## Feature gallery (July 13, 2026)
 
-Fresh screenshots from a live **EverQuest emulator** session (Muramite Proving Grounds / Valiant, `MQ2OverlayBridge2` connected) — spell gems + icons, ButtonMaster import, native inventory, corpse loot filters, full tab tour.
+Fresh screenshots from a live **EverQuest emulator** session (Muramite Proving Grounds / Enine, `MQ2OverlayBridge2`) — Kiss/Mule live control, combat/raid HUD, Crew Playbooks, plus the prior tab tour.
 
-### 1. Status — command center
+### 1. Status — command center + fight HUD
 
 ![Status tab](docs/screenshots/01-status.png)
 
-Vitals, identity cards, target/group, All Boxes overview, buffs with spell icons, and memorized gems (click to cast).
+Vitals, **Kiss / Mule** live toggles (pause / chase / melee / camp / burn, mode Apply, crew pause/resume), and the **Combat** strip: Target, ToT, Aggro, Mez/Charm/Burn, plus short buffs/songs.
+
+![Status Kiss & combat strip](docs/screenshots/01c-status-kiss-combat.png)
+
+Close-up of assist status pills and the four combat cards when no mob is targeted.
 
 ![Status rules & alerts](docs/screenshots/01b-status-rules.png)
 
@@ -346,7 +366,13 @@ Per-box vitals + role, Follow/Invite/Pause/Reconnect, loot peer policies, broadc
 
 ![Hotbuttons tab](docs/screenshots/08-hotbuttons.png)
 
-Global/per-character sets, **Import BM** for ButtonMaster share codes, categories (e.g. ButtonMaster), multi-step commands.
+Global/per-character sets, **Import BM** for ButtonMaster share codes, categories (e.g. ButtonMaster / Kiss), multi-step commands.
+
+### 8b. Playbooks — sequenced crew actions
+
+![Playbooks tab](docs/screenshots/08b-playbooks.png)
+
+Full-width board by channel (**Normal / EQBC / DanNet / Kiss**). Run / Edit / Del per playbook; starters for camp, med, EQBC assist/attack, DanNet follow, Kiss chase/burn. Edit drawer for name, category, and steps.
 
 ### 9. Plugins — load / unload + INI
 
@@ -406,7 +432,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 - [x] Production code-signing certificate in CI secrets (local sign path + pipeline exist)
 - [x] Public beta / installers published to this repo (`v0.7.0-beta.6`)
 - [x] UI polish pass (accent, focus exit, scroll, branded icon)
-- [x] Fresh screenshots (July 12 EMU gallery — gems/icons, BM import, inventory, loot filters)
+- [x] Fresh screenshots (July 13 — Kiss/Mule, combat HUD, Playbooks; July 12 gems/BM/loot)
 - [x] FactionTable / FactionManager standing without visible `/consider` (EMU)
 - [x] Native Detour poly dump from MQ2Nav `.navmesh`
 - [x] PathExists triangle wireframe fallback
