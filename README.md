@@ -49,9 +49,9 @@ Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
 
 ### What's new in 0.7.0-beta.14
-- **Updater tip fix:** default tip is now `raw.githubusercontent.com/.../main/updates.json` (jsDelivr was caching stale tips)
-- **Stable zip URL:** every ship replaces `channel-beta/MQ-Overlay-Companion-win32.zip` — same download link forever
-- Auto-migrates saved jsDelivr tip URLs in Settings
+- **Updater tip fix:** tip is always `.../releases/download/channel-beta/updates.json` (jsDelivr / raw@main were serving stale tips)
+- **Stable zip URL:** every ship replaces `channel-beta/MQ-Overlay-Companion-win32.zip` - same download link forever
+- Auto-migrates saved jsDelivr / raw@main tip URLs in Settings
 
 ### What's new in 0.7.0-beta.13
 - **LAN phone join:** QR + **6-digit PIN** (scan with **Camera**, not Google Authenticator); short `/m` URL; pick/type the PC IP your phone already reaches; Copy / Share phone link
