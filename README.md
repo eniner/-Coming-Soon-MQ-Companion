@@ -27,8 +27,8 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 | | |
 |--|--|
-| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.9 |
-| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.9-win32.zip` |
+| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.10 |
+| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.10-win32.zip` |
 | **Beta policy** | [docs/BETA.md](docs/BETA.md) — testing-only vs fully live |
 | **Updater tip** | `https://cdn.jsdelivr.net/gh/eniner/-Coming-Soon-MQ-Companion@main/updates.json` (always points at the current tip) |
 | **Bridge API** | **v8** (EMU handshake required) |
@@ -46,6 +46,14 @@ Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is
 **Hide/show overlay:** `Ctrl+Z` — toggles the **in-game overlay window only** (never your normal browser).
 
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
+
+### What's new in 0.7.0-beta.10
+- **Status:** memorized spell gems with names + click-to-cast; buff/gem **spell icons** from EQ `uifiles/default` (`spells01-07`)
+- **Hotbuttons:** **Import BM** paste for ButtonMaster / RedGuides share codes (sets + single buttons, `/timed` steps)
+- **Loot:** corpse LootWnd stays open on single-item loot; Keep/Ignore/Destroy/Sell row filters
+- **Inventory:** bridge-native sheet (no EZInventory required)
+- **Plugins:** macro dependency scan ignores `/plugin unload` false positives; larger macro scan cap
+- Gallery screenshots refreshed (Status gems/buffs, Hotbuttons BM import)
 
 ### What's new in 0.7.0-beta.9
 - **Hotfix:** restore LAN for installs that still had a legacy short token (auto-upgrade + bind)
@@ -74,9 +82,9 @@ See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater U
 - Main content scrolls on Windows; larger default window (1280×900); branded icon
 - Plugin/Lua bulk actions; Ctrl+1–9 box hotkeys
 
-### Docs / gallery refresh (July 12, 2026)
-- Fresh EMU screenshots (Status → Settings) including **native inventory sheet** and **corpse Loot.ini quick filters**
-- README + User Guide updated for bridge-native inventory (no EZInventory dependency) and Keep/Ignore/Destroy/Sell row buttons
+### Docs / gallery refresh (July 12, 2026 — evening)
+- Status / rules / Hotbuttons screenshots updated for **spell icons**, **gem grid**, and **Import BM**
+- Full tab gallery kept in sidebar order (Status → Settings)
 
 ---
 
@@ -191,6 +199,7 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 - Run on selected character; edit / add / delete
 - **Drag-to-reorder**, categories, per-character or Global sets
 - Import / export JSON + copy set across characters
+- **Import BM** — paste ButtonMaster share codes (base64) into hotbuttons
 - Triggerable from automation rules by label
 
 ### Plugins
@@ -261,17 +270,17 @@ This is everything the product **does and can do today** on **EQ emulator + Macr
 
 ## Feature gallery (July 12, 2026)
 
-Fresh screenshots from a live **EverQuest emulator** session (Valiant / Guild Lobby, `MQ2OverlayBridge2` connected) — native inventory, corpse LootWnd filters, and full tab tour.
+Fresh screenshots from a live **EverQuest emulator** session (Muramite Proving Grounds / Valiant, `MQ2OverlayBridge2` connected) — spell gems + icons, ButtonMaster import, native inventory, corpse loot filters, full tab tour.
 
 ### 1. Status — command center
 
 ![Status tab](docs/screenshots/01-status.png)
 
-Vitals, identity cards, target/group, All Boxes overview. Toast shows live Loot.ini updates (`Updated Sullied Silk → Ignore`).
+Vitals, identity cards, target/group, All Boxes overview, buffs with spell icons, and memorized gems (click to cast).
 
 ![Status rules & alerts](docs/screenshots/01b-status-rules.png)
 
-Buffs / gems, in-game HUD toggle, alert profiles, automation rules, send `/command`.
+Buffs & songs with durations/icons, casting & gem grid, HUD toggle, alerts, automation rules, send `/command`.
 
 ### 2. Console — live log + history
 
@@ -331,7 +340,7 @@ Per-box vitals + role, Follow/Invite/Pause/Reconnect, loot peer policies, broadc
 
 ![Hotbuttons tab](docs/screenshots/08-hotbuttons.png)
 
-Global/per-character sets, edit/import/export/copy, multi-step commands.
+Global/per-character sets, **Import BM** for ButtonMaster share codes, categories (e.g. ButtonMaster), multi-step commands.
 
 ### 9. Plugins — load / unload + INI
 
@@ -361,7 +370,7 @@ Grouped Config tree (KissAssist, MuleAssist, plugins, `Loot.ini`…), safe save 
 
 ![Settings appearance](docs/screenshots/13-settings.png)
 
-Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, updates (`0.7.0-beta.9`).
+Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, updates (`0.7.0-beta.10`).
 
 ![Settings remote](docs/screenshots/13b-settings-remote.png)
 
@@ -391,7 +400,7 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 - [x] Production code-signing certificate in CI secrets (local sign path + pipeline exist)
 - [x] Public beta / installers published to this repo (`v0.7.0-beta.6`)
 - [x] UI polish pass (accent, focus exit, scroll, branded icon)
-- [x] Fresh screenshots (July 12 EMU gallery above — native inventory + corpse filters)
+- [x] Fresh screenshots (July 12 EMU gallery — gems/icons, BM import, inventory, loot filters)
 - [x] FactionTable / FactionManager standing without visible `/consider` (EMU)
 - [x] Native Detour poly dump from MQ2Nav `.navmesh`
 - [x] PathExists triangle wireframe fallback
@@ -428,6 +437,8 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 | Automation rules + alerts | Working (preview) |
 | Inventory + icons + crew who-can-use | Working (native bridge; no EZInventory required) |
 | Loot (AdvLoot / Loot.ini quick filters / peers / council) | Working |
+| Spell gems + buff icons (uifiles spells01-07) | Working |
+| ButtonMaster share import | Working |
 | Spawns + Detour/PathExists mesh + path preview | Working |
 | FactionTable / consider standing (EMU) | Working |
 | Multi-box roles + broadcast + 12+ perf | Working |
@@ -441,4 +452,4 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 
 ---
 
-*Last updated: July 12, 2026 — docs + screenshot gallery (native inventory, corpse Keep/Ignore filters) — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 12, 2026 — v0.7.0-beta.10 (spell gems/icons, ButtonMaster import, loot/inventory) — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*

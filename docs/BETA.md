@@ -47,3 +47,7 @@ Report issues on the Coming Soon repo. Do **not** use on Daybreak Live.
 - Screenshot gallery refreshed from a live EMU session
 - Documented **native bridge inventory** (character sheet + item icons/stats)
 - Documented corpse **Keep / Ignore / Destroy / Sell** quick filters on Active Loot rows
+
+## Tip history
+
+- **0.7.0-beta.10** — spell gems/icons, ButtonMaster hotbutton import, loot/inventory native bridge, dependency-scan unload fix.

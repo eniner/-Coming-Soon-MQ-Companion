@@ -39,14 +39,14 @@ Blocked sessions report `health:"emu_blocked"` and do not accept commands. See a
 
 | Tab | Purpose |
 |-----|---------|
-| Status | Vitals, target, group, casting, alerts, automation rules |
+| Status | Vitals, target, group, buffs + spell gems (icons), alerts, automation rules |
 | Console | Live game/MQ/macro/Lua log, SQLite search, export, send commands |
 | Spawns | Nearby list + minimap legend; nav path / mesh overlay; watchlist |
 | Inventory | Worn/bags/bank + live character sheet from the bridge (icons + item stats; no EZInventory required) |
 | Loot | AdvLoot + corpse LootWnd; row Keep/Ignore/Destroy/Sell → Loot.ini; peers + raid council |
 | Nav | Zone binds, gate/succor, MQ2Nav status / ETA / camps |
 | Boxes | Crew overview, roles, broadcast, reconnect, Ctrl+1–9 |
-| Hotbuttons | Global/per-character command sets |
+| Hotbuttons | Global/per-character sets; Import JSON + Import BM (ButtonMaster share codes) |
 | Plugins / Macros / Lua | Load/unload, editors, bulk stop/unload |
 | INI | Grouped Config browser + safe save |
 | Settings | Theme, Ghost, LAN remote, session tokens, setup wizard |
