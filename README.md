@@ -27,8 +27,8 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 | | |
 |--|--|
-| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.11 |
-| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.11-win32.zip` |
+| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.12 |
+| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.12-win32.zip` |
 | **Beta policy** | [docs/BETA.md](docs/BETA.md) — testing-only vs fully live |
 | **Updater tip** | `https://cdn.jsdelivr.net/gh/eniner/-Coming-Soon-MQ-Companion@main/updates.json` (always points at the current tip) |
 | **Bridge API** | **v10** (EMU handshake required — reload `MQ2OverlayBridge2` after install) |
@@ -46,6 +46,9 @@ Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is
 **Hide/show overlay:** `Ctrl+Z` — toggles the **in-game overlay window only** (never your normal browser).
 
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
+
+### What's new in 0.7.0-beta.12
+- **Fix:** package now includes **`imgui.dll`** next to `OverlayCompanion.exe` (beta.11 crashed on launch for clean installs)
 
 ### What's new in 0.7.0-beta.11
 - **Crew Playbooks:** sequenced Normal / EQBC / DanNet / Kiss actions (roles, delays, hotbuttons, broadcast)
@@ -402,7 +405,7 @@ Grouped Config tree (KissAssist, MuleAssist, plugins, `Loot.ini`…), safe save 
 
 ![Settings appearance](docs/screenshots/13-settings.png)
 
-Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, updates (`0.7.0-beta.11`).
+Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, updates (`0.7.0-beta.12`).
 
 ![Settings remote](docs/screenshots/13b-settings-remote.png)
 
@@ -484,4 +487,4 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 
 ---
 
-*Last updated: July 13, 2026 — v0.7.0-beta.11 (Playbooks, Kiss live control, combat HUD) — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 13, 2026 — v0.7.0-beta.12 (imgui.dll packaging fix) — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
