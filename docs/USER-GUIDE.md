@@ -39,24 +39,27 @@ Blocked sessions report `health:"emu_blocked"` and do not accept commands. See a
 
 | Tab | Purpose |
 |-----|---------|
-| Status | Vitals, target, group, buffs + spell gems (icons), alerts, automation rules |
+| Status | Vitals, **Kiss/Mule** live toggles, **combat HUD** (ToT / aggro / mez / charm / burn), buffs + spell gems, alerts, rules |
 | Console | Live game/MQ/macro/Lua log, SQLite search, export, send commands |
 | Spawns | Nearby list + minimap legend; nav path / mesh overlay; watchlist |
 | Inventory | Worn/bags/bank + live character sheet from the bridge (icons + item stats; no EZInventory required) |
 | Loot | AdvLoot + corpse LootWnd; row Keep/Ignore/Destroy/Sell → Loot.ini; peers + raid council |
 | Nav | Zone binds, gate/succor, MQ2Nav status / ETA / camps |
-| Boxes | Crew overview, roles, broadcast, reconnect, Ctrl+1–9 |
-| Hotbuttons | Global/per-character sets; Import JSON + Import BM (ButtonMaster share codes) |
+| Boxes | Crew overview, roles, Kiss Pause/Chase/Burn, broadcast, reconnect, Ctrl+1–9 |
+| Hotbuttons | Global/per-character sets; Import JSON + Import BM; Kiss category starters |
+| Playbooks | Sequenced crew actions by channel (Normal / EQBC / DanNet / Kiss) |
 | Plugins / Macros / Lua | Load/unload, editors, bulk stop/unload |
 | INI | Grouped Config browser + safe save |
 | Settings | Theme, Ghost, LAN remote, session tokens, setup wizard |
 
 ## Multibox tips
 
-- Assign roles (main / puller / looter / healer) on box cards.
+- Assign roles (main / puller / looter / healer) on box cards — Playbooks can target by role.
+- Use **Playbooks** for camp/med/EQBC/DanNet/Kiss sequences; use Boxes Kiss buttons for live chase/burn/pause.
 - Use broadcast presets for common `/bc` / DanNet patterns.
 - At **12+ boxes**, companion and UI automatically slow spawn/inventory polls and paginate the Boxes grid. Set **Crew perf threshold** and **Boxes density** under Settings.
 - **Ctrl+1–9** switches the active box from the top bar.
+- After installing **0.7.0-beta.11+**, reload `MQ2OverlayBridge2` (bridge API **v10**) for assist + combat telemetry.
 
 ## Loot “who can use”
 
