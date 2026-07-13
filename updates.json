@@ -1,12 +1,12 @@
 {
-  "version": "0.7.0-beta.10",
-  "bridge_api": 8,
+  "version": "0.7.0-beta.11",
+  "bridge_api": 10,
   "channel": "beta",
-  "published_at": "2026-07-12T21:35:11.3466983-04:00",
-  "artifact": "MQ-Overlay-Companion-0.7.0-beta.10-win32.zip",
-  "sha256": "1f77c0cfd59f167bb85187bc653f48d3cd7d2ff3a142473ff06866ae1a3e0455",
+  "published_at": "2026-07-13T08:45:00-04:00",
+  "artifact": "MQ-Overlay-Companion-0.7.0-beta.11-win32.zip",
+  "sha256": "85842ed816ada985f58fc3b30f6e56f922a676b7e96684804ffc9e39635a40f4",
   "signed": false,
   "emu_only": true,
-  "notes": "Spell gems/icons, ButtonMaster Import BM, native inventory, loot filters. EQ emulator only.",
-  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.10/MQ-Overlay-Companion-0.7.0-beta.10-win32.zip"
+  "notes": "Crew Playbooks, Kiss/Mule live control, combat/raid HUD (ToT/aggro/mez/charm/burn). Bridge API v10 — reload MQ2OverlayBridge2. EQ emulator only.",
+  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.11/MQ-Overlay-Companion-0.7.0-beta.11-win32.zip"
 }

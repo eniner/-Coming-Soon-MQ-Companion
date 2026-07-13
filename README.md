@@ -27,11 +27,11 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 | | |
 |--|--|
-| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.10 |
-| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.10-win32.zip` |
+| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.11 |
+| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.11-win32.zip` |
 | **Beta policy** | [docs/BETA.md](docs/BETA.md) — testing-only vs fully live |
 | **Updater tip** | `https://cdn.jsdelivr.net/gh/eniner/-Coming-Soon-MQ-Companion@main/updates.json` (always points at the current tip) |
-| **Bridge API** | **v8** (EMU handshake required) |
+| **Bridge API** | **v10** (EMU handshake required — reload `MQ2OverlayBridge2` after install) |
 
 Older beta zips were **removed** from public Releases so testers only get the current EMU build. Use **Settings → Updates → Download & install** (or the tip link above) to stay current.
 
@@ -46,6 +46,12 @@ Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is
 **Hide/show overlay:** `Ctrl+Z` — toggles the **in-game overlay window only** (never your normal browser).
 
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
+
+### What's new in 0.7.0-beta.11
+- **Crew Playbooks:** sequenced Normal / EQBC / DanNet / Kiss actions (roles, delays, hotbuttons, broadcast)
+- **Kiss / Mule live control:** pause / chase / melee / camp / burn toggles + live assist status on Status and Boxes
+- **Combat / raid HUD:** ToT, mez/charm flags, aggro holder + %, short buffs/songs, burn window
+- **Bridge API v10** — reload `MQ2OverlayBridge2` after install (companion will warn on older DLLs)
 
 ### What's new in 0.7.0-beta.10
 - **Status:** memorized spell gems with names + click-to-cast; buff/gem **spell icons** from EQ `uifiles/default` (`spells01-07`)
@@ -107,7 +113,7 @@ flowchart LR
 
 1. **Web dashboard** — `http://127.0.0.1:38111/` (+ optional `/mobile.html`)
 2. **Overlay Companion** — hosts UI, SQLite store, icon atlas, rules/alerts, HTTP APIs
-3. **MQ2OverlayBridge** — in-game MQ plugin for **EMU** (deployed as `MQ2OverlayBridge2.dll`, **API v8**)
+3. **MQ2OverlayBridge** — in-game MQ plugin for **EMU** (deployed as `MQ2OverlayBridge2.dll`, **API v10**)
 4. **Optional data** — `Loot.ini`, MQ2Nav / `.navmesh`, UltDev icon catalog (icons only)
 
 The companion auto-detects connected **EQ emulator** clients. Switch boxes from the top bar; every tab follows the selected character.
@@ -370,7 +376,7 @@ Grouped Config tree (KissAssist, MuleAssist, plugins, `Loot.ini`…), safe save 
 
 ![Settings appearance](docs/screenshots/13-settings.png)
 
-Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, updates (`0.7.0-beta.10`).
+Theme/Ghost/OBS hide, crew perf, auto-greed, config bundle, session summary, updates (`0.7.0-beta.11`).
 
 ![Settings remote](docs/screenshots/13b-settings-remote.png)
 
@@ -452,4 +458,4 @@ Bridge / DLL / autoload / character session checklist + Install MQ Autoload.
 
 ---
 
-*Last updated: July 12, 2026 — v0.7.0-beta.10 (spell gems/icons, ButtonMaster import, loot/inventory) — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
+*Last updated: July 13, 2026 — v0.7.0-beta.11 (Playbooks, Kiss live control, combat HUD) — [eniner/-Coming-Soon-MQ-Companion](https://github.com/eniner/-Coming-Soon-MQ-Companion)*
