@@ -1,12 +1,12 @@
 {
-  "version": "0.7.0-beta.12",
+  "version": "0.7.0-beta.13",
   "bridge_api": 10,
   "channel": "beta",
-  "published_at": "2026-07-13T09:15:00-04:00",
-  "artifact": "MQ-Overlay-Companion-0.7.0-beta.12-win32.zip",
-  "sha256": "7fe7ea897eeb49f42e08349725526a11d47f86a900fbfd5ecb851e2972ea8770",
+  "published_at": "2026-07-13T09:57:00-04:00",
+  "artifact": "MQ-Overlay-Companion-0.7.0-beta.13-win32.zip",
+  "sha256": "358a46c66a50bce4dcba804ec2e37f0b12148a2b2e0c1d82b08475775fcffb1b",
   "signed": false,
   "emu_only": true,
-  "notes": "Fix: ship imgui.dll with OverlayCompanion.exe (beta.11 launch crash). Playbooks, Kiss live control, combat HUD. Bridge API v10 — reload MQ2OverlayBridge2. EQ emulator only.",
-  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.12/MQ-Overlay-Companion-0.7.0-beta.12-win32.zip"
+  "notes": "LAN phone join: QR + 6-digit PIN (scan with Camera, not Google Authenticator), /m short URL, remote Bearer on all APIs, pick the IP your phone can reach. Bridge API v10. EQ emulator only.",
+  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.13/MQ-Overlay-Companion-0.7.0-beta.13-win32.zip"
 }
