@@ -27,10 +27,11 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 | | |
 |--|--|
-| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.13 |
-| **Zip** | `MQ-Overlay-Companion-0.7.0-beta.13-win32.zip` |
+| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.14 |
+| **Zip (versioned)** | `MQ-Overlay-Companion-0.7.0-beta.14-win32.zip` |
+| **Zip (stable channel)** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/channel-beta/MQ-Overlay-Companion-win32.zip |
 | **Beta policy** | [docs/BETA.md](docs/BETA.md) — testing-only vs fully live |
-| **Updater tip** | `https://cdn.jsdelivr.net/gh/eniner/-Coming-Soon-MQ-Companion@main/updates.json` (always points at the current tip) |
+| **Updater tip (never change)** | `https://raw.githubusercontent.com/eniner/-Coming-Soon-MQ-Companion/main/updates.json` |
 | **Bridge API** | **v10** (EMU handshake required — reload `MQ2OverlayBridge2` after install) |
 
 Older beta zips were **removed** from public Releases so testers only get the current EMU build. Use **Settings → Updates → Download & install** (or the tip link above) to stay current.
@@ -46,6 +47,11 @@ Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is
 **Hide/show overlay:** `Ctrl+Z` — toggles the **in-game overlay window only** (never your normal browser).
 
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
+
+### What's new in 0.7.0-beta.14
+- **Updater tip fix:** default tip is now `raw.githubusercontent.com/.../main/updates.json` (jsDelivr was caching stale tips)
+- **Stable zip URL:** every ship replaces `channel-beta/MQ-Overlay-Companion-win32.zip` — same download link forever
+- Auto-migrates saved jsDelivr tip URLs in Settings
 
 ### What's new in 0.7.0-beta.13
 - **LAN phone join:** QR + **6-digit PIN** (scan with **Camera**, not Google Authenticator); short `/m` URL; pick/type the PC IP your phone already reaches; Copy / Share phone link

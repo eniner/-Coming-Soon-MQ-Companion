@@ -1,12 +1,15 @@
 {
-  "version": "0.7.0-beta.13",
+  "version": "0.7.0-beta.14",
   "bridge_api": 10,
   "channel": "beta",
-  "published_at": "2026-07-13T09:57:00-04:00",
-  "artifact": "MQ-Overlay-Companion-0.7.0-beta.13-win32.zip",
-  "sha256": "358a46c66a50bce4dcba804ec2e37f0b12148a2b2e0c1d82b08475775fcffb1b",
+  "published_at": "2026-07-13T10:05:00-04:00",
+  "artifact": "MQ-Overlay-Companion-win32.zip",
+  "sha256": "ad6baf89a26ba5b67aaeacb2949b8652dd9890ee41c252c0f91b58e58204763a",
   "signed": false,
   "emu_only": true,
-  "notes": "LAN phone join: QR + 6-digit PIN (scan with Camera, not Google Authenticator), /m short URL, remote Bearer on all APIs, pick the IP your phone can reach. Bridge API v10. EQ emulator only.",
-  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.13/MQ-Overlay-Companion-0.7.0-beta.13-win32.zip"
+  "notes": "Updater tip fix: stable raw.githubusercontent tip + channel-beta zip (same URLs every release). Migrates stale jsDelivr bookmarks. Includes LAN QR/PIN phone join. Bridge API v10. EQ emulator only.",
+  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/channel-beta/MQ-Overlay-Companion-win32.zip",
+  "versioned_artifact": "MQ-Overlay-Companion-0.7.0-beta.14-win32.zip",
+  "versioned_download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.14/MQ-Overlay-Companion-0.7.0-beta.14-win32.zip",
+  "tip_url": "https://raw.githubusercontent.com/eniner/-Coming-Soon-MQ-Companion/main/updates.json"
 }
