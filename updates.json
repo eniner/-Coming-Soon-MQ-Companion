@@ -1,15 +1,15 @@
 {
-    "version":  "0.7.0-beta.15",
-    "bridge_api":  10,
-    "channel":  "beta",
-    "published_at":  "2026-07-13T10:27:57.4843522-04:00",
-    "artifact":  "MQ-Overlay-Companion-win32.zip",
-    "sha256":  "a258e9a7708794d86946b49a77e2e7ff2522a26af4058b5be05f0bd90e85abfb",
-    "signed":  false,
-    "emu_only":  true,
-    "notes":  "Mobile join fix: QR PIN is one-time (Join will not re-burn it); Open full dashboard uses session + desktop=1. Stable channel-beta tip/zip. Bridge API v10. EQ emulator only.",
-    "download_url":  "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/channel-beta/MQ-Overlay-Companion-win32.zip",
-    "versioned_artifact":  "MQ-Overlay-Companion-0.7.0-beta.15-win32.zip",
-    "versioned_download_url":  "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.15/MQ-Overlay-Companion-0.7.0-beta.15-win32.zip",
-    "tip_url":  "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/channel-beta/updates.json"
+  "version": "0.7.0-beta.16",
+  "bridge_api": 10,
+  "channel": "beta",
+  "published_at": "2026-07-13T10:54:30.5534355-04:00",
+  "artifact": "MQ-Overlay-Companion-win32.zip",
+  "sha256": "e36e8970c31f39f4ed6a37106be79cb1e0df1ba9f64597d9dbfc28b64e6a555e",
+  "signed": false,
+  "emu_only": true,
+  "notes": "Phone cast/offline fix: paired remotes are not rate-limited; QR/PIN sessions get full control; slower phone polls; clearer cast errors. Bridge API v10. EQ emulator only.",
+  "download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/channel-beta/MQ-Overlay-Companion-win32.zip",
+  "versioned_artifact": "MQ-Overlay-Companion-0.7.0-beta.16-win32.zip",
+  "versioned_download_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/v0.7.0-beta.16/MQ-Overlay-Companion-0.7.0-beta.16-win32.zip",
+  "tip_url": "https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/channel-beta/updates.json"
 }

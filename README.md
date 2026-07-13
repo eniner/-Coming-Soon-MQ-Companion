@@ -27,8 +27,8 @@ Screenshots below are from a live **EQ emulator** session (Valiant / Guild Lobby
 
 | | |
 |--|--|
-| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.15 |
-| **Zip (versioned)** | `MQ-Overlay-Companion-0.7.0-beta.15-win32.zip` |
+| **Only public download** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/tag/v0.7.0-beta.16 |
+| **Zip (versioned)** | `MQ-Overlay-Companion-0.7.0-beta.16-win32.zip` |
 | **Zip (stable channel)** | https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/channel-beta/MQ-Overlay-Companion-win32.zip |
 | **Beta policy** | [docs/BETA.md](docs/BETA.md) — testing-only vs fully live |
 | **Updater tip (never change)** | `https://github.com/eniner/-Coming-Soon-MQ-Companion/releases/download/channel-beta/updates.json` |
@@ -47,6 +47,11 @@ Desktop shortcut launches the full companion (stage 5). Brand book-cover icon is
 **Hide/show overlay:** `Ctrl+Z` — toggles the **in-game overlay window only** (never your normal browser).
 
 See [Packaging](docs/PACKAGING.md) for Authenticode CI secrets and the updater URL. See [EMU hard gates](docs/EMU-GATES.md) for how Live is blocked.
+
+### What's new in 0.7.0-beta.16
+- **Phone cast / offline fix:** paired LAN clients are not rate-limited (old limit made casts fail and the UI flap offline)
+- QR/PIN sessions get **full control** (cast gems, commands); slower phone polling; clearer cast error toasts
+- After update: **New PIN / QR** once (session tokens reset on Companion restart)
 
 ### What's new in 0.7.0-beta.15
 - **Mobile join fix:** QR PIN is one-time; after scan, do not tap Join again
